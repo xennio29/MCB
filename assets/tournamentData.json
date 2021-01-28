@@ -1,0 +1,239 @@
+{
+	"tournamentName": "BeluClash",
+
+	"teams": [
+		{
+			"topLaner": {
+				"firstName": "test",
+				"lastName": "test",
+				"pseudo": "Singed Anti-Émeutes"
+			},
+			"midLaner": {
+				"firstName": "test",
+				"lastName": "test",
+				"pseudo": "Kayle Anti-Émeutes"
+			},
+			"jungle": {
+				"firstName": "test",
+				"lastName": "test",
+				"pseudo": "Graves Anti-Émeutes"
+			},
+			"botlaner": {
+				"firstName": "test",
+				"lastName": "test",
+				"pseudo": "Tristana Anti-Émeutes"
+			},
+			"support": {
+				"firstName": "test",
+				"lastName": "test",
+				"pseudo": "Blitzcrank Anti-Émeutes"
+			},
+			"name": "Riot Squad",
+			"id": 1
+		},
+		{
+			"topLaner": {
+				"firstName": "test",
+				"lastName": "test",
+				"pseudo": "Gragas FNATIC"
+			},
+			"midLaner": {
+				"firstName": "test",
+				"lastName": "test",
+				"pseudo": "Karthus FNATIC"
+			},
+			"jungle": {
+				"firstName": "test",
+				"lastName": "test",
+				"pseudo": "Jarvan IV FNATIC"
+			},
+			"botlaner": {
+				"firstName": "test",
+				"lastName": "test",
+				"pseudo": "Corki FNATIC"
+			},
+			"support": {
+				"firstName": "test",
+				"lastName": "test",
+				"pseudo": "Janna FNATIC"
+			},
+			"name": "FNATIC World Champion 2011",
+			"id": 2
+		},
+		{
+			"topLaner": {
+				"firstName": "test",
+				"lastName": "test",
+				"pseudo": "Shen TPA"
+			},
+			"midLaner": {
+				"firstName": "test",
+				"lastName": "test",
+				"pseudo": "Oriana TPA"
+			},
+			"jungle": {
+				"firstName": "test",
+				"lastName": "test",
+				"pseudo": "Dr. Mundo TPA"
+			},
+			"botlaner": {
+				"firstName": "test",
+				"lastName": "test",
+				"pseudo": "Ezreal TPA"
+			},
+			"support": {
+				"firstName": "test",
+				"lastName": "test",
+				"pseudo": "Nunu TPA"
+			},
+			"name": "TPA World Champion 2012",
+			"id": 3
+		},
+		{
+			"topLaner": {
+				"firstName": "test",
+				"lastName": "test",
+				"pseudo": "Jax SKT T1"
+			},
+			"midLaner": {
+				"firstName": "test",
+				"lastName": "test",
+				"pseudo": "Zed SKT T1"
+			},
+			"jungle": {
+				"firstName": "test",
+				"lastName": "test",
+				"pseudo": "Lee Sin SKT T1"
+			},
+			"botlaner": {
+				"firstName": "test",
+				"lastName": "test",
+				"pseudo": "Vayne SKT T1"
+			},
+			"support": {
+				"firstName": "test",
+				"lastName": "test",
+				"pseudo": "Zyra SKT T1"
+			},
+			"name": "SKT T1 World Champion 2013",
+			"id": 4
+		},
+		{
+			"topLaner": {
+				"firstName": "test",
+				"lastName": "test",
+				"pseudo": "Singed SSW"
+			},
+			"midLaner": {
+				"firstName": "test",
+				"lastName": "test",
+				"pseudo": "Talon SSW"
+			},
+			"jungle": {
+				"firstName": "test",
+				"lastName": "test",
+				"pseudo": "Rengar SSW"
+			},
+			"botlaner": {
+				"firstName": "test",
+				"lastName": "test",
+				"pseudo": "Twitch SSW"
+			},
+			"support": {
+				"firstName": "test",
+				"lastName": "test",
+				"pseudo": "Thresh SSW"
+			},
+			"name": "SSW World Champion 2014",
+			"id": 5
+		},
+		{
+			"topLaner": {
+				"firstName": "test",
+				"lastName": "test",
+				"pseudo": "Renekton SKT T1"
+			},
+			"midLaner": {
+				"firstName": "test",
+				"lastName": "test",
+				"pseudo": "Ryze SKT T1"
+			},
+			"jungle": {
+				"firstName": "test",
+				"lastName": "test",
+				"pseudo": "Elise SKT T1"
+			},
+			"botlaner": {
+				"firstName": "test",
+				"lastName": "test",
+				"pseudo": "Kalista SKT T1"
+			},
+			"support": {
+				"firstName": "test",
+				"lastName": "test",
+				"pseudo": "Alistar SKT T1"
+			},
+			"name": "SKT T1 World Champion 2015",
+			"id": 6
+		},
+		{
+			"topLaner": {
+				"firstName": "test",
+				"lastName": "test",
+				"pseudo": "Ekko SKT T1"
+			},
+			"midLaner": {
+				"firstName": "test",
+				"lastName": "test",
+				"pseudo": "Syndra SKT T1"
+			},
+			"jungle": {
+				"firstName": "test",
+				"lastName": "test",
+				"pseudo": "Zac SKT T1"
+			},
+			"botlaner": {
+				"firstName": "test",
+				"lastName": "test",
+				"pseudo": "Jhin SKT T1"
+			},
+			"support": {
+				"firstName": "test",
+				"lastName": "test",
+				"pseudo": "Nami SKT T1"
+			},
+			"name": "SKT T1 World Champion 2016",
+			"id": 7
+		},
+		{
+			"topLaner": {
+				"firstName": "test",
+				"lastName": "test",
+				"pseudo": "Gnar SSG"
+			},
+			"midLaner": {
+				"firstName": "test",
+				"lastName": "test",
+				"pseudo": "Taliyah SSG"
+			},
+			"jungle": {
+				"firstName": "test",
+				"lastName": "test",
+				"pseudo": "Jarvan IV SSG"
+			},
+			"botlaner": {
+				"firstName": "test",
+				"lastName": "test",
+				"pseudo": "Xayah SSG"
+			},
+			"support": {
+				"firstName": "test",
+				"lastName": "test",
+				"pseudo": "Rakan SSG"
+			},
+			"name": "SSG World Champion 2017",
+			"id": 8
+		}
+	]
+		
+}

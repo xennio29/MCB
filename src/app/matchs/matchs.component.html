@@ -1,0 +1,36 @@
+<div class ="container" fxLayoutGap="15%">
+
+    <mat-tab-group>
+        <mat-tab label="Match 1">
+            <ng-template matTabContent>
+                <bc-match [match]="matchsRonde1[i]" fxLayoutGap="20%" *ngFor="let match of matchsRonde1; let i = index;"></bc-match>
+            </ng-template>
+        </mat-tab>
+        <mat-tab label="Match 2">
+            <ng-template matTabContent>
+                <h2>Winner Bracket</h2>
+                <bc-match [match]="matchsRonde2[0]"></bc-match>
+                <bc-match [match]="matchsRonde2[1]"></bc-match>
+                <mat-divider></mat-divider>
+                <h2>Looser Bracket</h2>
+                <bc-match [match]="matchsRonde2[2]"></bc-match>
+                <bc-match [match]="matchsRonde2[3]"></bc-match>
+            </ng-template>
+        </mat-tab>
+        <mat-tab label="Match 3">
+            <ng-template matTabContent>
+                <h2>First place match</h2>
+                <bc-match [match]="matchsRonde3[0]"></bc-match>
+                <mat-divider></mat-divider>
+                <h2>Third place match</h2>
+                <bc-match [match]="matchsRonde3[1]"></bc-match>
+                <mat-divider></mat-divider>
+                <h2>Fifth place match</h2>
+                <bc-match [match]="matchsRonde3[2]"></bc-match>
+                <mat-divider></mat-divider>
+                <h2>Seventh place match</h2>
+                <bc-match [match]="matchsRonde3[3]"></bc-match>
+            </ng-template>
+        </mat-tab>
+  </mat-tab-group>
+</div>

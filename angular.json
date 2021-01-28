@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "belu-clash": {
+    "push-and-roll-website": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -12,12 +12,12 @@
       },
       "root": "",
       "sourceRoot": "src",
-      "prefix": "app",
+      "prefix": "bc",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/belu-clash",
+            "outputPath": "dist/push-and-roll-website",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -28,6 +28,7 @@
               "src/assets"
             ],
             "styles": [
+              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "src/styles.scss"
             ],
             "scripts": []
@@ -42,7 +43,10 @@
               ],
               "optimization": true,
               "outputHashing": "all",
+              "baseHref": "/PushAndRoll/",
+              "deployUrl": "/PushAndRoll/",
               "sourceMap": false,
+              "extractCss": true,
               "namedChunks": false,
               "extractLicenses": true,
               "vendorChunk": false,
@@ -65,18 +69,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "belu-clash:build"
+            "browserTarget": "push-and-roll-website:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "belu-clash:build:production"
+              "browserTarget": "push-and-roll-website:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "belu-clash:build"
+            "browserTarget": "push-and-roll-website:build"
           }
         },
         "test": {
@@ -91,6 +95,7 @@
               "src/assets"
             ],
             "styles": [
+              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "src/styles.scss"
             ],
             "scripts": []
@@ -113,16 +118,16 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "belu-clash:serve"
+            "devServerTarget": "push-and-roll-website:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "belu-clash:serve:production"
+              "devServerTarget": "push-and-roll-website:serve:production"
             }
           }
         }
       }
     }
   },
-  "defaultProject": "belu-clash"
+  "defaultProject": "push-and-roll-website"
 }

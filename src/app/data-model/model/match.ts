@@ -5,7 +5,6 @@ export class Match {
     public labelTeam1: string;
     public team2: Team;
     public labelTeam2: string;
-    public date: string;
     public winner: Team;
     public looser: Team
     public waitingWinner: boolean
@@ -15,7 +14,6 @@ export class Match {
         labelTeam1: string,
         team2: Team,
         labelTeam2: string,
-        date: string,
         winner?: Team
     ) {
 
@@ -23,7 +21,6 @@ export class Match {
         this.labelTeam1 = labelTeam1;
         this.team2 = team2;
         this.labelTeam2 = labelTeam2;
-        this.date = date;
         
         if(winner === undefined) {
             this.waitingWinner = true;

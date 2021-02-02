@@ -35,68 +35,60 @@ export class MatchsComponent implements OnInit {
    */
   structureMatch() {
 
-    this.matchsRonde1.push(new Match(this.teams[0], null, this.teams[1], null, "date to define"));
-    this.matchsRonde1.push(new Match(this.teams[2], null, this.teams[3], null, "date to define"));
-    this.matchsRonde1.push(new Match(this.teams[4], null, this.teams[5], null, "date to define"));
-    this.matchsRonde1.push(new Match(this.teams[6], null, this.teams[7], null, "date to define"));
+    this.matchsRonde1.push(new Match(this.teams[0], null, this.teams[1], null));
+    this.matchsRonde1.push(new Match(this.teams[2], null, this.teams[3], null));
+    this.matchsRonde1.push(new Match(this.teams[4], null, this.teams[5], null));
+    this.matchsRonde1.push(new Match(this.teams[6], null, this.teams[7], null));
 
     this.matchsRonde2.push(
       new Match(
         this.matchsRonde1[0].winner,
         "Winner of match 1 of ronde 1",
         this.matchsRonde1[1].winner,
-        "Winner of match 2 of ronde 1",
-        "date to define"));
+        "Winner of match 2 of ronde 1"));
     this.matchsRonde2.push(
       new Match(
         this.matchsRonde1[2].winner,
         "Winner of match 3 of ronde 1",
         this.matchsRonde1[3].winner,
-        "Winner of match 4 of ronde 1",
-        "date to define"));
+        "Winner of match 4 of ronde 1"));
     this.matchsRonde2.push(
       new Match(
         this.matchsRonde1[0].looser,
         "Losser of match 1 of ronde 1",
         this.matchsRonde1[1].looser,
-        "Losser of match 2 of ronde 1",
-        "date to define"));
+        "Losser of match 2 of ronde 1"));
     this.matchsRonde2.push(
       new Match(
         this.matchsRonde1[2].looser,
         "Losser of match 3 of ronde 1",
         this.matchsRonde1[3].looser,
-        "Losser of match 4 of ronde 1",
-        "date to define"));
+        "Losser of match 4 of ronde 1"));
 
     this.matchsRonde3.push(
       new Match(
         this.matchsRonde2[0].winner,
         "Winner of match 1 of ronde 2",
         this.matchsRonde2[1].winner,
-        "Winner of match 2 of ronde 2",
-        "date to define"));
+        "Winner of match 2 of ronde 2"));
     this.matchsRonde3.push(
       new Match(
         this.matchsRonde2[0].looser,
         "Losser of match 1 of ronde 2",
         this.matchsRonde2[1].looser,
-        "Losser of match 2 of ronde 2",
-        "date to define"));
+        "Losser of match 2 of ronde 2"));
     this.matchsRonde3.push(
       new Match(
         this.matchsRonde2[2].winner,
         "Winner of match 3 of ronde 2",
         this.matchsRonde2[3].winner,
-        "Winner of match 4 of ronde 2",
-        "date to define"));
+        "Winner of match 4 of ronde 2"));
     this.matchsRonde3.push(
       new Match(
         this.matchsRonde2[2].looser,
         "Losser of match 3 of ronde 2",
         this.matchsRonde2[3].looser,
-        "Losser of match 4 of ronde 2",
-        "date to define"));
+        "Losser of match 4 of ronde 2"));
 
   }
 

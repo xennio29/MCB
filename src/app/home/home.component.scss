@@ -1,0 +1,70 @@
+.by-me {
+    text-align: center;
+    padding: 30px;
+}
+
+.login-panel {
+    position: absolute;
+    height: 30px;
+    top: 0px;
+    right: 0px;
+    font-size: large;
+    background-color: blue;
+    color: white;
+    padding: 0px 20px 0px 20px;
+    border-bottom-left-radius: 100px;
+}
+
+.judge-name {
+    margin-left: 10px;
+    font-weight: bold;
+}
+.title {
+    font-weight: bolder;
+    height: 50px;
+}
+
+.text {
+    height: 50px;
+}
+
+P {
+    font-size: large;
+}
+
+.block {
+    width: 60%;
+    margin: 10px;
+}
+.tournamentName {
+    width: 60%;
+    color: white;
+    background-color: blue;
+}
+
+.full-width {
+    width: 100%;
+}
+
+.red {
+    color: red;
+}
+
+.player-radio-group {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.player-radio-button {
+    font-size: large;
+    margin: 5px;
+}
+
+.example-section {
+    margin: 12px 0;
+}
+
+.example-margin {
+    margin: 0 12px;
+}

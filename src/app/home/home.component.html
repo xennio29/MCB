@@ -1,0 +1,59 @@
+<mat-card fxLayout="column" fxLayoutAlign="space-around center" class="by-me">
+    <div class="title-panel full-width">
+        <div class="login-panel" fxLayout="row" fxLayoutAlign="end center">
+            <div>You're log as </div>
+            <div class="judge-name">{{judgeName}}</div>
+        </div>
+        <h1 class="title">
+            Infraction Form
+        </h1>
+    </div>
+    <mat-card class="tournamentName">
+        <mat-card-title>
+            {{tournamentName}}
+        </mat-card-title>
+    </mat-card>
+    <mat-card class="block">
+        <mat-card-title class="round">
+            We are actually in round {{roundNumber}}
+        </mat-card-title>
+    </mat-card>
+    <mat-card class="block">
+        <mat-form-field class="full-width" appearance="fill">
+            <mat-label>Table number</mat-label>
+            <input type="number" matInput placeholder="Enter the table number" [ngModel]="tableNumber" (ngModelChange)="onTableNumberChange($event)">
+        </mat-form-field>
+        <mat-radio-group aria-label="Select an option" class="player-radio-group" [(ngModel)]="selectedPlayer"  (ngModelChange)="onSelectedPlayerChange($event)">
+            <mat-radio-button value="player1Choice" class="player-radio-button">{{player1}}</mat-radio-button>
+            <mat-radio-button value="player2Choice" class="player-radio-button">{{player2}}</mat-radio-button>
+        </mat-radio-group>
+    </mat-card>
+    <mat-card class="block">
+        <mat-form-field class="full-width" appearance="fill">
+            <mat-label>Infraction</mat-label>
+            <mat-select  [(ngModel)]="selectedInfraction">
+                <mat-option *ngFor="let infraction of infractions" [value]="infraction">
+                    {{infraction.name}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <div class="penalty" *ngIf="selectedInfraction">
+            The penalty is a: <p class="red">{{selectedInfraction.penalty}}</p>
+            <section class="example-section">
+                <mat-checkbox class="example-margin">Upgrade (not implement) </mat-checkbox>
+                <mat-checkbox class="example-margin">FMGS for opponent (not implement) </mat-checkbox>
+                <mat-checkbox class="example-margin">GRV for opponent (not implement) </mat-checkbox>
+            </section>
+            <div fxLayout="row" fxLayoutAlign="center center" *ngIf="selectedPlayer">
+                this player ({{selectedPlayerName}}) have 0 infraction(s) of this type.
+            </div>
+        </div>
+    </mat-card>
+    <mat-card class="block">
+        <mat-form-field class="full-width" appearance="fill">
+            <mat-label>Details</mat-label>
+            <textarea matInput placeholder="Enter the details about the infraction"></textarea>
+        </mat-form-field>
+    </mat-card>
+    <button mat-raised-button (click)="openSnackBar()">Send</button>
+</mat-card>

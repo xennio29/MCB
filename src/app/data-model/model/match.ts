@@ -1,5 +1,3 @@
-import { isTypeAssignableToNumber } from "node_modules_save/tsutils";
-
 export class Match {
 
     public tableNumber: number;

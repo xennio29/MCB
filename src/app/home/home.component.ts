@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MatSnackBar } from 'node_modules_save/@angular/material/snack-bar';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { DataService } from '../data-model/data/data.service';
 import { Infraction } from '../data-model/model/infraction';
 import { Match } from '../data-model/model/match';
@@ -59,6 +59,8 @@ export class HomeComponent {
   }
 
   openSnackBar(): void {
-    this.snackBar.open("coucuo");
+    this.snackBar.open("Infraction added to registry", "", {
+      duration: 2 * 1000,
+    });
   }
 }

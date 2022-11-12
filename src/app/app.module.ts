@@ -14,6 +14,7 @@ import {FormsModule} from '@angular/forms';
 import {MatSelectModule} from '@angular/material/select';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatButtonModule} from '@angular/material/button';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import {MatButtonModule} from '@angular/material/button';
     FormsModule,
     MatSelectModule,
     MatCheckboxModule,
-    MatButtonModule
+    MatButtonModule,
+    MatSnackBarModule
   ],
   providers: [],
   bootstrap: [AppComponent]

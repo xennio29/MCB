@@ -1,9 +1,0 @@
-<mat-sidenav-container>
-    <mat-sidenav #sidenav role="navigation">
-        <bc-side-bar (sidenavClose)="sidenav.close()"></bc-side-bar>
-    </mat-sidenav>
-    <mat-sidenav-content>
-        <bc-menu-bar (sidenavToggle)="sidenav.toggle()"></bc-menu-bar>
-        <router-outlet></router-outlet>
-    </mat-sidenav-content>
-</mat-sidenav-container>

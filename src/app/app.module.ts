@@ -1,25 +1,25 @@
-import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
 
-import { HttpClientModule } from '@angular/common/http';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { MaterialModule } from './core/material/material.module';
 import { HomeComponent } from './home/home.component';
-import {MatCardModule} from '@angular/material/card';
-import {MatInputModule} from '@angular/material/input';
-import {MatRadioModule} from '@angular/material/radio';
-import {FormsModule} from '@angular/forms';
-import {MatSelectModule} from '@angular/material/select';
-import {MatCheckboxModule} from '@angular/material/checkbox';
-import {MatButtonModule} from '@angular/material/button';
-import {MatSnackBarModule} from '@angular/material/snack-bar';
+import { MenuBarComponent } from './menu-bar/menu-bar.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MaterialModule } from './core/material/material.module';
+import { SideBarComponent } from './side-bar/side-bar.component';
+import { HttpClientModule } from '@angular/common/http';
+import { MatCardModule } from '@angular/material/card';
+import { MatListModule } from '@angular/material/list';
+import { TixbankComponent } from './tixbank/tixbank.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
+    MenuBarComponent,
+    SideBarComponent,
+    TixbankComponent,
   ],
   imports: [
     BrowserModule,
@@ -28,13 +28,7 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
     BrowserAnimationsModule,
     MaterialModule,
     MatCardModule,
-    MatRadioModule,
-    MatInputModule,
-    FormsModule,
-    MatSelectModule,
-    MatCheckboxModule,
-    MatButtonModule,
-    MatSnackBarModule
+    MatListModule
   ],
   providers: [],
   bootstrap: [AppComponent]

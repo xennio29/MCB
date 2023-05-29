@@ -1,0 +1,11 @@
+<mat-nav-list>
+    <div class="whiteLogo" class="whiteLogo" routerLink="/home" routerLinkActive="home-is-active">
+        <img [src]="whiteLogo" class="whiteLogo">
+    </div>
+    <a mat-list-item routerLink="/home" (click)="onSidenavClose()">
+        <mat-icon>home</mat-icon> <span class="nav-caption"> Home</span>
+    </a>
+    <a mat-list-item routerLink="/tixbank" (click)="onSidenavClose()">
+        <mat-icon>person</mat-icon> <span class="nav-caption"> Your Tix Points</span>
+    </a>
+</mat-nav-list>

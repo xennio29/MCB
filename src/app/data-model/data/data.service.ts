@@ -1,68 +1,93 @@
+import { HttpClient } from '@angular/common/http';
 import { EventEmitter } from '@angular/core';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Infraction } from '../model/infraction';
-import { Match } from '../model/match';
-import { Database } from './database';
-import { DataBaseProvider } from './DataBaseProvider';
-import { IpgDatabase } from './ipgDatabase';
-import { PlayerDatabase } from './playerDatabase';
+import { Player } from '../model/player';
+import { TixProfil } from '../model/tixprofil';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DataService {
 
-  /* The database once it's import. */
-  private playerDatabase: PlayerDatabase = null;
-  private ipgDatabase: IpgDatabase = null;
+  public tixProfilEmitter: EventEmitter<TixProfil[]>;
+  private readonly tixProfilFile = 'https://raw.githubusercontent.com/xennio29/Bat-flight/featureMcb/src/assets/TIX_MCB.csv';
+  private _playersTix: TixProfil[];
 
-  constructor(private dataBaseProvider: DataBaseProvider) { 
+  private loaded = false;
 
-    dataBaseProvider.playerDatabaseEmitter.subscribe( result => this.playerDatabase = result);
-    dataBaseProvider.loadPlayerDatabase();
+  constructor(private http: HttpClient) { 
 
-    dataBaseProvider.ipgDatabaseEmitter.subscribe( result => this.ipgDatabase = result);
-    dataBaseProvider.loadIpgDatabase();
+    this.tixProfilEmitter = new EventEmitter();
+
   }
 
-  private playerDatabaseCall( method: string ) {
-    return new Observable<any> ( observer => {
 
-      if(this.playerDatabase !== null) {
-        observer.next(this.playerDatabase[method]());
+  loadData(): Observable<any> {
+
+    return new Observable<any> ((observer) => {
+
+      this.http.get(this.tixProfilFile, {responseType: 'text'})
+        .subscribe(playersTix => {
+  
+        console.log('Reading TIX_MCB.csv');
+
+        this._playersTix = this.extractPlayersTix(playersTix);
+  
+        console.log(this._playersTix.length + ' players were extract.');
+
         observer.complete();
-      } else {
-        this.dataBaseProvider.playerDatabaseEmitter.subscribe(result => {
-            observer.next(result[method]());
-            observer.complete();
-        });
-      }
+      });
     });
+
   }
 
-  private ipgDatabaseCall( method: string ) {
-    return new Observable<any> ( observer => {
-      if(this.playerDatabase !== null) {
-        observer.next(this.ipgDatabase[method]());
-        observer.complete();
+  // ASKER
+  //////////////////////
+
+  askData(...datasType: DataType[]) {
+
+    if(!this.loaded) {
+      this.loadData().subscribe({
+        complete: () => {
+          this.loaded = true;
+          this.emitData(...datasType);
+        }
+      });
+    } else {
+      this.emitData(...datasType);
+    }
+  }
+
+  private emitData(...datasType: DataType[]) {
+
+    datasType.forEach( dataType => {
+      switch (dataType) {
+        case DataType.TIX_PROFIL: this.tixProfilEmitter.emit(this._playersTix);
       }
-    });
+    })
   }
 
-  getTournamentName(): Observable<string> {
-    return this.playerDatabaseCall('getTournamentName');
+  private extractPlayersTix(playersTix: string): TixProfil[] {
+    const tixProfils: TixProfil[] = [];
+    const lines = playersTix.split('\n');
+    // remove header
+    lines.splice(0, 1);
+    lines.forEach(playerLine => tixProfils.push(this.extractPlayer(playerLine)));
+    return tixProfils;
   }
 
-  getRoundNumber(): Observable<number> {
-    return this.playerDatabaseCall('getRoundNumber');
+  private extractPlayer(playerLine): TixProfil {
+    const values : string[] = playerLine.split(',');
+    values[0]
+    return new TixProfil(
+      values[0],
+      values[1],
+      values[2]
+    );
   }
+}
 
-  getAllMatchs(): Observable<Match[]> {
-    return this.playerDatabaseCall('getAllMatchs');
-  }
-
-  getInfractions(): Observable<Infraction[]> {
-    return this.ipgDatabaseCall('getInfractions');
-  }
+export enum DataType {
+  TIX_PROFIL
 }

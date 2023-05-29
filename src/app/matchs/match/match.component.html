@@ -1,9 +1,0 @@
-<mat-card fxLayout="row" fxLayoutAlign="space-evenly center">
-    <div class="team" [ngClass]="{'team-name': match.team1 !== undefined, 'no-team': match.team1 === undefined}">
-        {{match.team1 === undefined ? match.labelTeam1 : match.team1.name}}
-    </div>
-    <div class="vs">VS</div>
-    <div class="team" [ngClass]="{'team-name': match.team1 !== undefined, 'no-team': match.team1 === undefined}">
-        {{match.team2 === undefined ? match.labelTeam2 : match.team2.name}}
-    </div>
-</mat-card>

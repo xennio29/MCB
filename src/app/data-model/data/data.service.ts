@@ -2,8 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { EventEmitter } from '@angular/core';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Team } from '../model/team';
-import tournamentData from '../../../assets/tournamentData.json'
+import data from '../../../assets/data.json'
 import { Player } from '../model/player';
 
 @Injectable({
@@ -11,15 +10,13 @@ import { Player } from '../model/player';
 })
 export class DataService {
 
-  private _teams: Team[];
+  public playerEmitter: EventEmitter<Player[]>;
 
-  public teamEmitter: EventEmitter<Team[]>;
-
-  loaded = false;
+  private loaded = false;
 
   constructor(private http: HttpClient) { 
 
-    this.teamEmitter = new EventEmitter();
+    this.playerEmitter = new EventEmitter();
 
   }
 
@@ -43,10 +40,7 @@ export class DataService {
       */
 
       // DEVELOPMENT
-      console.log('Welcome to ' + tournamentData.tournamentName);
-  
-      this._teams = this.constructTeams(tournamentData.teams);
-      console.log(this._teams.length + ' teams imported.');
+      console.log('Reading data.json');
 
       observer.complete();
 
@@ -76,35 +70,9 @@ export class DataService {
 
     datasType.forEach( dataType => {
       switch (dataType) {
-        case DataType.Teams: this.teamEmitter.emit(this._teams);
+        // case DataType.Player: this.playerEmitter.emit(this._teams);
       }
     })
-  }
-
-  // TEAM CONSTRUCTION
-  //////////////////////
-
-  private constructTeams(teams): Team[] {
-    const tournamentTeams: Team[] = [];
-
-    teams.forEach(team => {
-      tournamentTeams.push(this.toTeamDomain(team));      
-    });
-
-    return tournamentTeams;
-  }
-
-  private toTeamDomain(team): Team {
-    return new Team(
-      this.toPlayerDomain(team.topLaner),
-      this.toPlayerDomain(team.midLaner),
-      this.toPlayerDomain(team.jungle),
-      this.toPlayerDomain(team.botlaner),
-      this.toPlayerDomain(team.support),
-      team.name,
-      team.id
-    );
-
   }
 
   private toPlayerDomain(player): Player {
@@ -119,5 +87,5 @@ export class DataService {
 }
 
 export enum DataType {
-  Teams
+  Player
 }

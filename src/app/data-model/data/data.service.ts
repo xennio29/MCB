@@ -2,21 +2,23 @@ import { HttpClient } from '@angular/common/http';
 import { EventEmitter } from '@angular/core';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import data from '../../../assets/data.json'
 import { Player } from '../model/player';
+import { TixProfil } from '../model/tixprofil';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DataService {
 
-  public playerEmitter: EventEmitter<Player[]>;
+  public tixProfilEmitter: EventEmitter<TixProfil[]>;
+  private readonly tixProfilFile = 'https://raw.githubusercontent.com/xennio29/Bat-flight/featureMcb/src/assets/TIX_MCB.csv';
+  private _playersTix: TixProfil[];
 
   private loaded = false;
 
   constructor(private http: HttpClient) { 
 
-    this.playerEmitter = new EventEmitter();
+    this.tixProfilEmitter = new EventEmitter();
 
   }
 
@@ -25,25 +27,17 @@ export class DataService {
 
     return new Observable<any> ((observer) => {
 
-      // PRODUCTION
-      /*
-      this.http.get<any>('https://raw.githubusercontent.com/xennio29/PushAndRoll/data/src/assets/tournamentData.json').subscribe(data => {
+      this.http.get(this.tixProfilFile, {responseType: 'text'})
+        .subscribe(playersTix => {
   
-        console.log('Welcome to ' + data.tournamentName);
-  
-        this._teams = this.constructTeams(data.teams);
-        console.log(this._teams.length + ' players imported.');
+        console.log('Reading TIX_MCB.csv');
 
+        this._playersTix = this.extractPlayersTix(playersTix);
+  
+        console.log(this._playersTix.length + ' players were extract.');
 
         observer.complete();
       });
-      */
-
-      // DEVELOPMENT
-      console.log('Reading data.json');
-
-      observer.complete();
-
     });
 
   }
@@ -63,29 +57,37 @@ export class DataService {
     } else {
       this.emitData(...datasType);
     }
-
   }
 
   private emitData(...datasType: DataType[]) {
 
     datasType.forEach( dataType => {
       switch (dataType) {
-        // case DataType.Player: this.playerEmitter.emit(this._teams);
+        case DataType.TIX_PROFIL: this.tixProfilEmitter.emit(this._playersTix);
       }
     })
   }
 
-  private toPlayerDomain(player): Player {
-    return new Player(
-      player.firstName,
-      player.lastName,
-      player.pseudo
-    );
-
+  private extractPlayersTix(playersTix: string): TixProfil[] {
+    const tixProfils: TixProfil[] = [];
+    const lines = playersTix.split('\n');
+    // remove header
+    lines.splice(0, 1);
+    lines.forEach(playerLine => tixProfils.push(this.extractPlayer(playerLine)));
+    return tixProfils;
   }
 
+  private extractPlayer(playerLine): TixProfil {
+    const values : string[] = playerLine.split(',');
+    values[0]
+    return new TixProfil(
+      values[0],
+      values[1],
+      values[2]
+    );
+  }
 }
 
 export enum DataType {
-  Player
+  TIX_PROFIL
 }

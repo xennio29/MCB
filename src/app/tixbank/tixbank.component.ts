@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 import { DataService, DataType } from '../data-model/data/data.service';
-import { Player } from '../data-model/model/player';
+import { TixProfil } from '../data-model/model/tixprofil';
 
 @Component({
   selector: 'bc-tixbank',
@@ -9,19 +11,24 @@ import { Player } from '../data-model/model/player';
 })
 export class TixbankComponent implements OnInit {
 
-  players: Player[] = [];
+  @ViewChild(MatSort) sort: MatSort;
+
+  displayedColumns = ['lastName', 'firstName', 'tixPoint'];
+
+  tixProfils: TixProfil[] = [];
+  dataSource;
 
   constructor(private dataService: DataService) {
 
-    this.dataService.playerEmitter.subscribe( result => {
-      this.players = result;
+    this.dataService.tixProfilEmitter.subscribe( result => {
+      this.tixProfils = result;
+      this.dataSource = new MatTableDataSource(this.tixProfils);
+      this.dataSource.sort = this.sort;
     });
 
-    this.dataService.askData(DataType.Player);
-
+    this.dataService.askData(DataType.TIX_PROFIL);
   }
 
   ngOnInit(): void {
   }
-
 }

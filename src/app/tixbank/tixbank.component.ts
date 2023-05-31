@@ -31,4 +31,10 @@ export class TixbankComponent implements OnInit {
 
   ngOnInit(): void {
   }
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    console.log("filterValue : " + filterValue);
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
 }

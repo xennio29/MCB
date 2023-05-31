@@ -1,7 +1,11 @@
 <div class="container">
 
+    <mat-form-field>
+        <mat-label>Filter</mat-label>
+        <input matInput (keyup)="applyFilter($event)" placeholder="nom/prénom" #input>
+    </mat-form-field>
     <h2>TIX Board</h2>
-    <table mat-table [dataSource]="tixProfils" matSort class="mat-elevation-z8">
+    <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
     
         <ng-container matColumnDef="lastName">
             <th mat-header-cell *matHeaderCellDef mat-sort-header class="w-20"> Nom </th>

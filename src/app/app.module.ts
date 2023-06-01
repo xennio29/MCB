@@ -15,6 +15,7 @@ import { TixbankComponent } from './tixbank/tixbank.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatTableModule } from '@angular/material/table';
 import { MatInputModule } from '@angular/material/input';
+import { MasterComponent } from './master/master.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { MatInputModule } from '@angular/material/input';
     MenuBarComponent,
     SideBarComponent,
     TixbankComponent,
+    MasterComponent
   ],
   imports: [
     BrowserModule,

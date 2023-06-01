@@ -8,7 +8,7 @@ import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 })
 export class MenuBarComponent implements OnInit {
 
-  whiteLogo = 'assets/img/white_logo.png';
+  whiteLogo = 'assets/img/mcb_logo.png';
   rootName = '';
 
   @Output() public sidenavToggle = new EventEmitter();
@@ -29,22 +29,14 @@ export class MenuBarComponent implements OnInit {
     switch (path) {
       case '/home':
         return 'Home';
-      case '/participants':
-        return 'Participants';
-      case '/rules':
-        return 'Réglement';
-      case '/pods':
-        return 'Pods';
-      case '/matchs':
-        return 'Matchs';
-      case '/rankings':
-        return 'Classement';
+      case '/tixbank':
+        return 'Your TIX Point';
+      case '/master':
+        return 'Master';
     }
-
   }
 
   public onToggleSidenav = () => {
     this.sidenavToggle.emit();
   }
-
 }

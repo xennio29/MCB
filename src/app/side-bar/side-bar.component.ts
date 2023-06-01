@@ -7,7 +7,7 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 })
 export class SideBarComponent implements OnInit {
 
-  whiteLogo = 'assets/img/white_logo.png';
+  whiteLogo = 'assets/img/mcb_logo.png';
 
   constructor() { }
 
@@ -20,6 +20,4 @@ export class SideBarComponent implements OnInit {
   public onSidenavClose = () => {
     this.sidenavClose.emit();
   }
-
-
 }

@@ -3,22 +3,17 @@
     <h2>Synthèse Master</h2>
     <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
     
-        <ng-container matColumnDef="lastName">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header class="w-20"> Nom </th>
-            <td mat-cell *matCellDef="let element" > {{element.lastName}} </td>
-        </ng-container>
-
-        <ng-container matColumnDef="firstName">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header class="w-20"> Prénom </th>
-            <td mat-cell *matCellDef="let element" > {{element.firstName}} </td>
+        <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef class="w-20 header"> Nom </th>
+            <td mat-cell *matCellDef="let element"> {{element.name}} </td>
         </ng-container>
 
         <ng-container matColumnDef="masterPoints">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header class="w-30"> Master Points </th>
-            <td mat-cell *matCellDef="let element" > {{element.tixPoints}} </td>
+            <th mat-header-cell *matHeaderCellDef class="w-30 header"> Master Points </th>
+            <td mat-cell *matCellDef="let element" > {{element.masterPoints}} </td>
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        <tr mat-row *matRowDef="let row; let rank = index; columns: displayedColumns;" [ngClass]="rank < 8 ? 'qualified' : ''"></tr>
     </table>
 </div>

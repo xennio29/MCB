@@ -7,8 +7,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
-  belugasLogo = 'assets/img/redblack_logo.png';
-  discordLogo = 'assets/img/4771549-circle-discord-gaming-messenger-round-icon-icon-discord-icon-png-512_512_preview.png';
+  logo = 'assets/img/mcb_logo.png';
+  discordLogo = 'assets/img/discord_logo.png';
 
   constructor() { }
 
@@ -16,6 +16,6 @@ export class HomeComponent implements OnInit {
   }
 
   goDiscord(){
-    window.open("https://discord.gg/6G6KyYj9sM", "_blank");
+    window.open("https://discord.gg/2wxRaB5aK2", "_blank");
   }
 }

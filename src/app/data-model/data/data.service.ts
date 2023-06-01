@@ -2,7 +2,6 @@ import { HttpClient } from '@angular/common/http';
 import { EventEmitter } from '@angular/core';
 import { Injectable } from '@angular/core';
 import { Observable, forkJoin } from 'rxjs';
-import { Player } from '../model/player';
 import { TixProfil } from '../model/tixprofil';
 import { MasterProfil } from '../model/masterprofil';
 
@@ -12,12 +11,17 @@ import { MasterProfil } from '../model/masterprofil';
 export class DataService {
 
   public tixProfilEmitter: EventEmitter<TixProfil[]>;
-  private readonly tixProfilsFile = 'https://raw.githubusercontent.com/xennio29/Bat-flight/featureMcb/src/assets/TIX_MCB.csv';
-  private _tixProfils: TixProfil[];
+  private readonly tixProfilsFile = 'https://raw.githubusercontent.com/xennio29/Bat-flight/main/src/assets/TIX_MCB.csv';
+  private _tixProfils: TixProfil[] = [];
 
   public masterProfilEmitter: EventEmitter<MasterProfil[]>;
-  private readonly masterProfilsFile = 'https://raw.githubusercontent.com/xennio29/Bat-flight/featureMcb/src/assets/MASTER_2023.csv';
-  private _masterProfils: MasterProfil[];
+  private readonly masterProfilsFile = 'https://raw.githubusercontent.com/xennio29/Bat-flight/main/src/assets/MASTERS_2023.csv';
+  private _masterProfils: MasterProfil[] = [];
+
+  private sources = [
+    this.http.get(this.tixProfilsFile, {responseType: 'text'}),
+    this.http.get(this.masterProfilsFile, {responseType: 'text'})
+  ];
 
   private loaded = false;
 
@@ -28,45 +32,16 @@ export class DataService {
 
   }
 
-
   loadData(): Observable<any> {
-
     return new Observable<any> ((observer) => {
-
-      console.log("coucou");
-
-      this.http.get(this.tixProfilsFile, {responseType: 'text'})
-        .subscribe(tixProfils => {
-  
-        console.log('Reading TIX_MCB.csv');
-        this._tixProfils = this.extractTixProfils(tixProfils);
-        console.log(this._tixProfils.length + ' players were extract.');
+      forkJoin(this.sources).subscribe(sheets => {
+        var tixProfils = sheets[0];
+        this.extractTixProfils(tixProfils);
+        var masterProfils = sheets[1];
+        this.extractMasterProfils(masterProfils);
+        observer.complete();
       });
-
-      this.http.get(this.masterProfilsFile, {responseType: 'text'})
-        .subscribe(masterProfils => {
-  
-        console.log('Reading MASTER_2023.csv');
-        this._masterProfils = this.extractMasterProfils(masterProfils);
-        console.log(this._masterProfils.length + ' players were extract.');
-      });
-
-      var sources = [
-        this.http.get(this.tixProfilsFile, {responseType: 'text'}),
-        this.http.get(this.masterProfilsFile, {responseType: 'text'})
-      ];
-
-      forkJoin(sources).subscribe(test => {
-        var test0 = test[0];
-        console.log(test0);
-        // should work
-
-
-      });
-
-      observer.complete
     });
-
   }
 
   // ASKER
@@ -96,22 +71,28 @@ export class DataService {
     })
   }
 
-  private extractTixProfils(playersTix: string): TixProfil[] {
-    const tixProfils: TixProfil[] = [];
+  private extractTixProfils(playersTix: string): void {
+    console.log('Reading TIX_MCB.csv');
     const lines = playersTix.split('\n');
     // remove header
     lines.splice(0, 1);
-    lines.forEach(playerLine => tixProfils.push(this.extractTixProfil(playerLine)));
-    return tixProfils;
+    lines.forEach(playerLine => this._tixProfils.push(this.extractTixProfil(playerLine)));
+    console.log("--> " + this._tixProfils.length + ' players were extract.');
   }
 
-  private extractMasterProfils(playersTix: string): MasterProfil[] {
+  private extractMasterProfils(playersTix: string): void {
+    console.log('Reading MASTER_2023.csv');
     const masterProfils: MasterProfil[] = [];
     const lines = playersTix.split('\n');
     // remove header
-    lines.splice(0, 1);
-    lines.forEach(playerLine => masterProfils.push(this.extractMasterProfil(playerLine)));
-    return masterProfils;
+    lines.splice(0, 2);
+    lines.forEach(playerLine => {
+      var masterProfil = this.extractMasterProfil(playerLine);
+      if (masterProfil != null) {
+        this._masterProfils.push(masterProfil);
+      }
+    });
+    console.log("--> " + this._masterProfils.length + ' players were extract.');
   }
 
   private extractTixProfil(playerLine): TixProfil {
@@ -125,13 +106,17 @@ export class DataService {
   }
 
   private extractMasterProfil(playerLine): MasterProfil {
-    const values : string[] = playerLine.split(',');
-    values[0]
-    return new MasterProfil(
-      values[0],
-      values[1],
-      values[2]
-    );
+    const values : string[] = playerLine.split(';');
+    var points = values[0];
+    var name = values[1];
+    if (name != undefined && name.length != 0
+      && points != undefined && points != "0") {
+        return new MasterProfil(
+          name,
+          points
+        );
+    }
+    return null;
   }
 }
 

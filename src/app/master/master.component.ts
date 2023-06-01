@@ -12,7 +12,7 @@ import { MasterProfil } from '../data-model/model/masterprofil';
 })
 export class MasterComponent implements OnInit {
 
-  displayedColumns = ['lastName', 'firstName', 'masterPoints'];
+  displayedColumns = ['name', 'masterPoints'];
 
   masterProfils: MasterProfil[] = [];
   dataSource;
@@ -28,5 +28,10 @@ export class MasterComponent implements OnInit {
   }
 
   ngOnInit(): void {
+  }
+
+  isQualified(truc) {
+    console.log(truc);
+    return true;
   }
 }

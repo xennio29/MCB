@@ -1,13 +1,11 @@
 export class TixProfil {
-     public firstName: string;
-     public lastName: string;
+     public name: string;
      public tixPoints: string;
 
      private readonly UNWANTED_CHARACTER : string[] = ["\""];
 
-     constructor(firstName: string, lastName: string, tixPoint: string) {
-        this.firstName = this.cleanFirstName(firstName);
-        this.lastName = this.cleanLastName(lastName);
+     constructor(name: string, tixPoint: string) {
+        this.name = name;
         this.tixPoints = tixPoint;
     }
 

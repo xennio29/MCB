@@ -100,8 +100,7 @@ export class DataService {
     values[0]
     return new TixProfil(
       values[0],
-      values[1],
-      values[2]
+      values[1]
     );
   }
 

@@ -13,7 +13,7 @@ export class TixbankComponent implements OnInit {
 
   @ViewChild(MatSort) sort: MatSort;
 
-  displayedColumns = ['lastName', 'firstName', 'tixPoint'];
+  displayedColumns = ['name', 'tixPoint'];
 
   tixProfils: TixProfil[] = [];
   dataSource;

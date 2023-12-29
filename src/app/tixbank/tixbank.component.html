@@ -8,13 +8,8 @@
     <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
     
         <ng-container matColumnDef="lastName">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header class="w-20"> Nom </th>
-            <td mat-cell *matCellDef="let element" > {{element.lastName}} </td>
-        </ng-container>
-
-        <ng-container matColumnDef="firstName">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header class="w-20"> Prénom </th>
-            <td mat-cell *matCellDef="let element" > {{element.firstName}} </td>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="w-50"> Nom Prénom </th>
+            <td mat-cell *matCellDef="let element" > {{element.name}} </td>
         </ng-container>
 
         <ng-container matColumnDef="tixPoint">

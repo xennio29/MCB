@@ -11,11 +11,11 @@ import { MasterProfil } from '../model/masterprofil';
 export class DataService {
 
   public tixProfilEmitter: EventEmitter<TixProfil[]>;
-  private readonly tixProfilsFile = 'https://raw.githubusercontent.com/xennio29/Bat-flight/main/src/assets/TIX_MCB.csv';
+  private readonly tixProfilsFile = 'https://raw.githubusercontent.com/xennio29/MCB/main/src/assets/TIX_MCB.csv';
   private _tixProfils: TixProfil[] = [];
 
   public masterProfilEmitter: EventEmitter<MasterProfil[]>;
-  private readonly masterProfilsFile = 'https://raw.githubusercontent.com/xennio29/Bat-flight/main/src/assets/MASTERS_2023.csv';
+  private readonly masterProfilsFile = 'https://raw.githubusercontent.com/xennio29/MCB/main/src/assets/MASTERS_2023.csv';
   private _masterProfils: MasterProfil[] = [];
 
   private sources = [

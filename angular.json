@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "bat-flight": {
+    "MCB": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -12,17 +12,17 @@
       },
       "root": "",
       "sourceRoot": "src",
-      "prefix": "bf",
+      "prefix": "MCB",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/bat-flight",
+            "outputPath": "dist/MCB",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
-            "baseHref": "/Bat-flight/",
+            "baseHref": "/MCB/",
             "aot": true,
             "assets": [
               "src/favicon.ico",
@@ -67,18 +67,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "bat-flight:build"
+            "browserTarget": "MCB:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "bat-flight:build:production"
+              "browserTarget": "MCB:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "bat-flight:build"
+            "browserTarget": "MCB:build"
           }
         },
         "test": {
@@ -103,11 +103,11 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "bat-flight:serve"
+            "devServerTarget": "MCB:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "bat-flight:serve:production"
+              "devServerTarget": "MCB:serve:production"
             }
           }
         }

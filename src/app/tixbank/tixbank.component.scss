@@ -3,6 +3,15 @@
     margin: 5%;
 }
 
+mat-panel-title {
+    width: 70%;
+}
+
+mat-panel-description {
+    font-weight: bold;
+    color: black;
+}
+
 .mat-mdc-form-field {
     font-size: 50px;
     width: 100%;
@@ -30,4 +39,20 @@ table {
 
 .w-10 {
     width: 10%;
+}
+
+.green {
+    color: green;
+    font-weight: bold;
+    position: relative;
+    right: 10px;
+    width: 20%;
+}
+
+.red {
+    color: red;
+    font-weight: bold;
+    position: relative;
+    right: 10px;
+    width: 20%;
 }

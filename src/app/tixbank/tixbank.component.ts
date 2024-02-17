@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { DataService, DataType } from '../data-model/data/data.service';
-import { TixProfil } from '../data-model/model/tixprofil';
+import { TixChangeByEvent, TixProfil } from '../data-model/model/tixprofil';
 
 @Component({
   selector: 'bc-tixbank',
@@ -13,17 +13,17 @@ export class TixbankComponent implements OnInit {
 
   @ViewChild(MatSort) sort: MatSort;
 
-  displayedColumns = ['name', 'tixPoint'];
+  displayedColumns = ['name', 'date', 'tixDiff'];
 
   tixProfils: TixProfil[] = [];
-  dataSource;
+  filteredTixProfils: TixProfil[] = this.tixProfils;
+
 
   constructor(private dataService: DataService) {
 
     this.dataService.tixProfilEmitter.subscribe( result => {
       this.tixProfils = result;
-      this.dataSource = new MatTableDataSource(this.tixProfils);
-      this.dataSource.sort = this.sort;
+      this.filteredTixProfils = result
     });
 
     this.dataService.askData(DataType.TIX_PROFIL);
@@ -33,7 +33,15 @@ export class TixbankComponent implements OnInit {
   }
 
   applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+    const filterValue = (event.target as HTMLInputElement).value.trim().toLowerCase();
+    this.filteredTixProfils = this.tixProfils.filter(tixProfil => tixProfil.name.trim().toLowerCase().match('.*' + filterValue + '.*'));
+  }
+
+  callGetTotalTix(tixProfil : TixProfil) {
+    return tixProfil.getTotalTix();
+  }
+
+  generateDataSource(tixProfil: TixProfil): MatTableDataSource<TixChangeByEvent> {
+    return new MatTableDataSource(tixProfil.tixChanges);
   }
 }

@@ -2,8 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { EventEmitter } from '@angular/core';
 import { Injectable } from '@angular/core';
 import { Observable, forkJoin } from 'rxjs';
-import { TixProfil } from '../model/tixprofil';
 import { MasterProfil } from '../model/masterprofil';
+import { TixProfil, TixProfilLine, fromTixLinesToTixProfils } from '../model/tixprofil';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +11,7 @@ import { MasterProfil } from '../model/masterprofil';
 export class DataService {
 
   public tixProfilEmitter: EventEmitter<TixProfil[]>;
-  private readonly tixProfilsFile = 'https://raw.githubusercontent.com/xennio29/MCB/main/src/assets/TIX_MCB.csv';
+  private readonly tixProfilsFile = 'https://raw.githubusercontent.com/xennio29/MCB/main/src/assets/data_tix.csv';
   private _tixProfils: TixProfil[] = [];
 
   public masterProfilEmitter: EventEmitter<MasterProfil[]>;
@@ -72,11 +72,14 @@ export class DataService {
   }
 
   private extractTixProfils(playersTix: string): void {
-    console.log('Reading TIX_MCB.csv');
+    console.log('Reading data_tix.csv');
     const lines = playersTix.split('\n');
+    let tixProfilsLines: TixProfilLine[] = [];
     // remove header
     lines.splice(0, 1);
-    lines.forEach(playerLine => this._tixProfils.push(this.extractTixProfil(playerLine)));
+    lines.forEach(playerLine => tixProfilsLines.push(this.extractTixProfilLine(playerLine)));
+    this._tixProfils = fromTixLinesToTixProfils(tixProfilsLines);
+    console.log(this._tixProfils);
     console.log("--> " + this._tixProfils.length + ' players were extract.');
   }
 
@@ -95,12 +98,13 @@ export class DataService {
     console.log("--> " + this._masterProfils.length + ' players were extract.');
   }
 
-  private extractTixProfil(playerLine): TixProfil {
+  private extractTixProfilLine(playerLine): TixProfilLine {
     const values : string[] = playerLine.split(',');
-    values[0]
-    return new TixProfil(
+    return new TixProfilLine(
       values[0],
-      values[1]
+      values[2],
+      values[3],
+      values[4]
     );
   }
 

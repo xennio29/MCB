@@ -11,13 +11,27 @@ import { TixChangeByEvent, TixProfil } from '../data-model/model/tixprofil';
 })
 export class TixbankComponent implements OnInit {
 
+  private static frToEn: Map<string, string> = new Map ([
+    ["january", "janvier"],
+    ["february", "février"],
+    ["march", "mars"],
+    ["april", "avril"],
+    ["may", "mai"],
+    ["june", "juin"],
+    ["july", "juillet"],
+    ["august", "août"],
+    ["september", "septembre"],
+    ["october", "octobre"],
+    ["november", "novembre"],
+    ["december", "décembre"]
+    ]);
+
   @ViewChild(MatSort) sort: MatSort;
 
   displayedColumns = ['name', 'date', 'tixDiff'];
 
   tixProfils: TixProfil[] = [];
   filteredTixProfils: TixProfil[] = this.tixProfils;
-
 
   constructor(private dataService: DataService) {
 
@@ -42,6 +56,7 @@ export class TixbankComponent implements OnInit {
   }
 
   generateDataSource(tixProfil: TixProfil): MatTableDataSource<TixChangeByEvent> {
-    return new MatTableDataSource(tixProfil.tixChanges);
+    let sortedTixChangeEvent = tixProfil.tixChanges.sort( (a, b) => a.date < b.date ? 1 : -1);
+    return new MatTableDataSource(sortedTixChangeEvent);
   }
 }

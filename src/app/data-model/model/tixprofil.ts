@@ -38,11 +38,11 @@ export class TixProfil {
 }
 
 export class TixChangeByEvent {
-    public date: string;
+    public date: Date;
     public eventName: string;
     public tixDiff: number;
 
-    constructor(date: string, eventName: string, tixDiff: number) {
+    constructor(date: Date, eventName: string, tixDiff: number) {
         this.date = date;
         this.eventName = eventName;
         this.tixDiff = tixDiff;
@@ -70,7 +70,7 @@ export function fromTixLinesToTixProfils(tixProfilLines: TixProfilLine[]): TixPr
 function createTixChangeByEventFromTixProfilLine(tixProfilLine: TixProfilLine): TixChangeByEvent {
     let tixDiff: number = +tixProfilLine.tixdiff;
     return new TixChangeByEvent(
-        tixProfilLine.date,
+        new Date(tixProfilLine.date),
         tixProfilLine.eventName,
         tixDiff
     );

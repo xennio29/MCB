@@ -7,6 +7,8 @@
 
     <h2>TIX Board</h2>
 
+    <p class="update-date">Dernière mise à jour : 17/02/2024</p>
+
     <mat-accordion>
         <mat-expansion-panel *ngFor="let tixProfil of filteredTixProfils">
           <mat-expansion-panel-header>
@@ -21,14 +23,14 @@
           <table mat-table [dataSource]="generateDataSource(tixProfil)" matSort class="mat-elevation-z8">
     
             <ng-container matColumnDef="name">
-                <td mat-cell *matCellDef="let element" > {{element.eventName}} </td>
+                <td mat-cell *matCellDef="let element" class="left"> {{element.eventName}} </td>
             </ng-container>
 
             <ng-container matColumnDef="date">
-                <td mat-cell *matCellDef="let element" > {{element.date}} </td>
+                <td mat-cell *matCellDef="let element" class="middle"> {{element.date.toLocaleDateString()}} </td>
             </ng-container>
     
-            <ng-container matColumnDef="tixDiff" [ngClass]="w-20">
+            <ng-container matColumnDef="tixDiff">
                 <td mat-cell *matCellDef="let element" [ngClass]="element.tixDiff > 0 ? 'green' : 'red'"> {{element.tixDiff}} </td>
             </ng-container>
     

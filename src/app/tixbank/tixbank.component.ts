@@ -37,6 +37,7 @@ export class TixbankComponent implements OnInit {
 
     this.dataService.tixProfilEmitter.subscribe( result => {
       this.tixProfils = result;
+      this.tixProfils.sort((profilA, profilB) => profilA.name > profilB.name ? 1 : -1)
       this.filteredTixProfils = result
     });
 

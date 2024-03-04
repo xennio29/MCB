@@ -16,7 +16,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatTableModule } from '@angular/material/table';
 import { MatInputModule } from '@angular/material/input';
 import { MasterComponent } from './master/master.component';
-import {MatExpansionModule} from '@angular/material/expansion';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { ProxiesComponent } from './proxies/proxies.component';
+import { MatGridListModule } from '@angular/material/grid-list';
 
 
 @NgModule({
@@ -26,7 +28,8 @@ import {MatExpansionModule} from '@angular/material/expansion';
     MenuBarComponent,
     SideBarComponent,
     TixbankComponent,
-    MasterComponent
+    MasterComponent,
+    ProxiesComponent
   ],
   imports: [
     BrowserModule,
@@ -39,7 +42,8 @@ import {MatExpansionModule} from '@angular/material/expansion';
     MatFormFieldModule,
     MatTableModule,
     MatInputModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatGridListModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

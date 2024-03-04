@@ -1,0 +1,19 @@
+<p>Pour chacun des évènements Legacy organisé par le MCB, il est possible d'avoir des proxiess.</p>
+<p>Uniquement les proxies fournis par le MCB sont autorisés.<br/>Pour en avoir, il suffit de demander :).</p>
+<p> Voici la listes des proxies disponibles :</p>
+
+<mat-grid-list fxHide.gt-xs cols="2" rowHeight="280px" gutterSize="10">
+    <mat-grid-tile *ngFor="let imagePath of imagesPath">
+        <div class="imageCadre">
+            <img class="img" [src]="imagePath">
+        </div>
+    </mat-grid-tile>
+</mat-grid-list>
+
+<mat-grid-list fxHide.xs cols="5" rowHeight="600px" gutterSize="20">
+    <mat-grid-tile *ngFor="let imagePath of imagesPath">
+        <div class="imageCadre">
+            <img class="img" [src]="imagePath">
+        </div>
+    </mat-grid-tile>
+</mat-grid-list>

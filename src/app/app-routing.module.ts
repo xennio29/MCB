@@ -3,9 +3,12 @@ import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { TixbankComponent } from './tixbank/tixbank.component';
 import { MasterComponent } from './master/master.component';
+import { ProxiesComponent } from './proxies/proxies.component';
 
 export const routes: Routes = [
   {path: 'tixbank', component: TixbankComponent },
+
+  {path: 'proxies', component: ProxiesComponent },
 
   {path: 'master', component: MasterComponent },
 

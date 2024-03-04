@@ -30,9 +30,11 @@ export class MenuBarComponent implements OnInit {
       case '/home':
         return 'Home';
       case '/tixbank':
-        return 'Your TIX Point';
+        return 'Vos Points TIX';
       case '/master':
         return 'Master';
+      case '/proxies':
+        return 'Proxies';
     }
   }
 

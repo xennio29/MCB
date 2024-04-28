@@ -10,7 +10,7 @@ export const routes: Routes = [
 
   {path: 'proxies', component: ProxiesComponent },
 
-  {path: 'master', component: MasterComponent },
+  {path: 'masters', component: MasterComponent },
 
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: '**', redirectTo: '/home', pathMatch: 'full' },

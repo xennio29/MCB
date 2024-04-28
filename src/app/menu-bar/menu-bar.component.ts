@@ -31,8 +31,8 @@ export class MenuBarComponent implements OnInit {
         return 'Home';
       case '/tixbank':
         return 'Vos Points TIX';
-      case '/master':
-        return 'Master';
+      case '/masters':
+        return 'Classement des Masters';
       case '/proxies':
         return 'Proxies';
     }

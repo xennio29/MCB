@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { EventEmitter } from '@angular/core';
 import { Injectable } from '@angular/core';
 import { Observable, forkJoin } from 'rxjs';
-import { MasterProfil } from '../model/masterprofil';
+import { MasterProfil, MasterProfilLine, fromMasterLinesToMasterProfils } from '../model/masterprofil';
 import { TixProfil, TixProfilLine, fromTixLinesToTixProfils } from '../model/tixprofil';
 
 @Injectable({
@@ -15,7 +15,7 @@ export class DataService {
   private _tixProfils: TixProfil[] = [];
 
   public masterProfilEmitter: EventEmitter<MasterProfil[]>;
-  private readonly masterProfilsFile = 'https://raw.githubusercontent.com/xennio29/MCB/main/src/assets/MASTERS_2023.csv';
+  private readonly masterProfilsFile = 'https://raw.githubusercontent.com/xennio29/MCB/main/src/assets/data_masters.csv';
   private _masterProfils: MasterProfil[] = [];
 
   private sources = [
@@ -79,23 +79,18 @@ export class DataService {
     lines.splice(0, 1);
     lines.forEach(playerLine => tixProfilsLines.push(this.extractTixProfilLine(playerLine)));
     this._tixProfils = fromTixLinesToTixProfils(tixProfilsLines);
-    console.log(this._tixProfils);
-    console.log("--> " + this._tixProfils.length + ' players were extract.');
+    console.log("--> " + this._tixProfils.length + ' tix profils were extract.');
   }
 
   private extractMasterProfils(playersTix: string): void {
-    console.log('Reading MASTER_2023.csv');
-    const masterProfils: MasterProfil[] = [];
+    console.log('Reading data_masters.csv');
+    const masterProfilLines: MasterProfilLine[] = [];
     const lines = playersTix.split('\n');
     // remove header
-    lines.splice(0, 2);
-    lines.forEach(playerLine => {
-      var masterProfil = this.extractMasterProfil(playerLine);
-      if (masterProfil != null) {
-        this._masterProfils.push(masterProfil);
-      }
-    });
-    console.log("--> " + this._masterProfils.length + ' players were extract.');
+    lines.splice(0, 1);
+    lines.forEach(playerLine => masterProfilLines.push(this.extractMasterProfil(playerLine)));
+    this._masterProfils = fromMasterLinesToMasterProfils(masterProfilLines);
+    console.log("--> " + this._masterProfils.length + ' master profils were extract.');
   }
 
   private extractTixProfilLine(playerLine): TixProfilLine {
@@ -108,18 +103,14 @@ export class DataService {
     );
   }
 
-  private extractMasterProfil(playerLine): MasterProfil {
-    const values : string[] = playerLine.split(';');
-    var points = values[0];
-    var name = values[1];
-    if (name != undefined && name.length != 0
-      && points != undefined && points != "0") {
-        return new MasterProfil(
-          name,
-          points
-        );
-    }
-    return null;
+  private extractMasterProfil(playerLine): MasterProfilLine {
+    const values : string[] = playerLine.split(',');
+    return new MasterProfilLine(
+      values[0],
+      values[1],
+      values[2],
+      values[3]
+    );
   }
 }
 

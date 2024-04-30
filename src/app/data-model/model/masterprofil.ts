@@ -33,7 +33,7 @@ export class MasterProfil {
     public getTotalMasterPoints():number {
         let totalMasterPoints = 0;
         this.masterChanges.forEach(masterChange => totalMasterPoints = totalMasterPoints + masterChange.masterPoints);
-        return totalMasterPoints;
+        return Math.round(totalMasterPoints);
     }
 }
 

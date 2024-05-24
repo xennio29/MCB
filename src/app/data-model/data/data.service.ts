@@ -77,7 +77,11 @@ export class DataService {
     let tixProfilsLines: TixProfilLine[] = [];
     // remove header
     lines.splice(0, 1);
-    lines.forEach(playerLine => tixProfilsLines.push(this.extractTixProfilLine(playerLine)));
+    lines.forEach(playerLine => {
+      if(playerLine.length > 0) {
+          tixProfilsLines.push(this.extractTixProfilLine(playerLine));
+      }
+    });
     this._tixProfils = fromTixLinesToTixProfils(tixProfilsLines);
     console.log("--> " + this._tixProfils.length + ' tix profils were extract.');
   }
@@ -88,7 +92,11 @@ export class DataService {
     const lines = playersTix.split('\n');
     // remove header
     lines.splice(0, 1);
-    lines.forEach(playerLine => masterProfilLines.push(this.extractMasterProfil(playerLine)));
+    lines.forEach(playerLine => {
+      if(playerLine.length > 0) {
+        masterProfilLines.push(this.extractMasterProfil(playerLine));
+      }
+    });
     this._masterProfils = fromMasterLinesToMasterProfils(masterProfilLines);
     console.log("--> " + this._masterProfils.length + ' master profils were extract.');
   }

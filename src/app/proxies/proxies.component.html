@@ -2,16 +2,39 @@
 <p>Uniquement les proxies fournis par le MCB sont autorisés.<br/>Pour en avoir, il suffit de demander :).</p>
 <p> Voici la listes des proxies disponibles :</p>
 
-<mat-grid-list fxHide.gt-xs cols="2" rowHeight="280px" gutterSize="10">
-    <mat-grid-tile *ngFor="let imagePath of imagesPath">
+<p>
+    <mat-button-toggle-group #group="matButtonToggleGroup" name="fontStyle" aria-label="Font Style" appearance="standard" [value]="selectedVal" (change)="onValChange(group.value)">
+        <mat-button-toggle value="legacy">Legacy</mat-button-toggle>
+        <mat-button-toggle value="vintage">Vintage</mat-button-toggle>
+    </mat-button-toggle-group>
+</p>
+
+<mat-grid-list fxHide.gt-xs cols="2" rowHeight="280px" gutterSize="10" *ngIf="isLegacy">
+    <mat-grid-tile *ngFor="let imagePath of LegacyImagesPath">
         <div class="imageCadre">
             <img class="img" [src]="imagePath">
         </div>
     </mat-grid-tile>
 </mat-grid-list>
 
-<mat-grid-list fxHide.xs cols="5" rowHeight="600px" gutterSize="20">
-    <mat-grid-tile *ngFor="let imagePath of imagesPath">
+<mat-grid-list fxHide.xs cols="5" rowHeight="600px" gutterSize="20" *ngIf="isLegacy">
+    <mat-grid-tile *ngFor="let imagePath of LegacyImagesPath">
+        <div class="imageCadre">
+            <img class="img" [src]="imagePath">
+        </div>
+    </mat-grid-tile>
+</mat-grid-list>
+
+<mat-grid-list fxHide.gt-xs cols="2" rowHeight="280px" gutterSize="10" *ngIf="isVintage">
+    <mat-grid-tile *ngFor="let imagePath of VintageImagesPath">
+        <div class="imageCadre">
+            <img class="img" [src]="imagePath">
+        </div>
+    </mat-grid-tile>
+</mat-grid-list>
+
+<mat-grid-list fxHide.xs cols="5" rowHeight="600px" gutterSize="20" *ngIf="isVintage">
+    <mat-grid-tile *ngFor="let imagePath of VintageImagesPath">
         <div class="imageCadre">
             <img class="img" [src]="imagePath">
         </div>

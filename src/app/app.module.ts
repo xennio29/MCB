@@ -19,6 +19,7 @@ import { MasterComponent } from './master/master.component';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { ProxiesComponent } from './proxies/proxies.component';
 import { MatGridListModule } from '@angular/material/grid-list';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 
 
 @NgModule({
@@ -44,6 +45,7 @@ import { MatGridListModule } from '@angular/material/grid-list';
     MatInputModule,
     MatExpansionModule,
     MatGridListModule,
+    MatButtonToggleModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

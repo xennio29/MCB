@@ -7,10 +7,6 @@
     width: 100%;
 }
 
-// mat-grid-tile {
-//     background: lightblue;
-//   }
-
 mat-grid-list {
     margin: 10px;
 }
@@ -20,4 +16,8 @@ p {
     font-size: large;
     text-align: center;
     margin: 20px;
+}
+
+mat-button-toggle-group {
+    border-radius: 50px;
 }

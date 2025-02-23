@@ -23,6 +23,13 @@
     "@angular/platform-browser": "^14.2.9",
     "@angular/platform-browser-dynamic": "^14.2.9",
     "@angular/router": "^14.2.9",
+    "@fullcalendar/angular": "^6.1.16",
+    "@fullcalendar/core": "^6.1.15",
+    "@fullcalendar/daygrid": "^6.1.15",
+    "@fullcalendar/interaction": "^6.1.15",
+    "angular-calendar": "^0.29.0",
+    "angular-resizable-element": "^7.0.2",
+    "date-fns": "^4.1.0",
     "rxjs": "~6.5.5",
     "tslib": "^2.0.0",
     "zone.js": "~0.11.8"

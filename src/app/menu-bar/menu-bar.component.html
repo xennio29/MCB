@@ -13,7 +13,10 @@
             <span>Vos Points TIX</span>
         </div>
     </div>
-    <div class="not-home" fxLayout="row" fxLayoutGap="5%" fxLayoutAlign="center center" fxHide.xs>
+    <div class="whiteLogo" class="whiteLogo" routerLink="/home" routerLinkActive="home-is-active">
+        <img [src]="whiteLogo" class="whiteLogo">
+    </div>
+    <div class="not-home" fxLayout="row" fxLayoutGap="5px" fxLayoutAlign="center center" fxHide.xs>
         <div class="menu" routerLink="/proxies" routerLinkActive="is-active">
             <span>Proxies</span>
         </div>
@@ -23,7 +26,5 @@
             <span>Classement des Masters</span>
         </div>
     </div>
-    <div class="whiteLogo" class="whiteLogo" routerLink="/home" routerLinkActive="home-is-active">
-        <img [src]="whiteLogo" class="whiteLogo">
-    </div>
+
 </mat-toolbar>

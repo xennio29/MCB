@@ -20,6 +20,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { ProxiesComponent } from './proxies/proxies.component';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { FullCalendarModule } from '@fullcalendar/angular';
 
 
 @NgModule({
@@ -37,6 +38,7 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
     HttpClientModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    FullCalendarModule,
     MaterialModule,
     MatCardModule,
     MatListModule,
@@ -45,7 +47,7 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
     MatInputModule,
     MatExpansionModule,
     MatGridListModule,
-    MatButtonToggleModule,
+    MatButtonToggleModule
   ],
   providers: [],
   bootstrap: [AppComponent]

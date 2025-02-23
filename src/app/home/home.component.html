@@ -1,17 +1,38 @@
 
-<div fxLayout="column" fxLayoutAlign="space-around center" class="by-belugas">
-    <div class="text">
-        <p>
-            Welcome to Magic Club Bessières
-        </p>
-    </div>
+<div fxLayout="column" fxLayoutAlign="center center" class="by-belugas">
+
     <div class="logoDiv">
         <img [src]="logo" class="logo">
     </div>
-    <div class="join-us">
-        Join un on Discord
+
+    <div class="calendar-container">
+        <full-calendar [options]="calendarOptions"></full-calendar>
     </div>
-    <div class="discordDiv">
-        <img [src]="discordLogo" class="logo" (click)="goDiscord()">
+
+    <div class="socialsContainer">
+        <img [src]="discordLogo" alt="Discord" class="discordDiv" (click)="goDiscord()">
+        <img [src]="xlogo" alt="X (Twitter)" class="xDiv">
     </div>
+      
+      <div class="popup-container" *ngIf="showPopup">
+        <div class="popup">
+          <h2> 📌 {{ editedTitle }}</h2>
+          <p> 📝 {{ editedDescription }}</p>
+      
+          <!-- Display the image in its original size -->
+          <div *ngIf="editedImage">
+            <img [src]="editedImage" alt="Event image" class="event-image" />
+          </div>
+      
+          <!-- Delete buttons -->
+          <button *ngIf="!isEditing" (click)="deleteEvent()" style="background-color: #f44336; color: white; padding: 8px 15px; border: none; border-radius: 5px; cursor: pointer;">
+            Delete </button>
+          <button (click)="closePopup()" style="background-color: #000000; color: white; padding: 8px 15px; border: none; border-radius: 5px; cursor: pointer;">
+            Close</button>
+        </div>
+      </div>
+      
+      
+      
+      
 </div>

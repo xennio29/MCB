@@ -45,3 +45,7 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+old_node_modules
+old_package-lock.json
+old_after_alotofupdate_node_modules
+old_after_alotofupdate_package-lock.json

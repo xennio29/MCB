@@ -2,9 +2,10 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 
 @Component({
-  selector: 'bc-menu-bar',
-  templateUrl: './menu-bar.component.html',
-  styleUrls: ['./menu-bar.component.scss']
+    selector: 'bc-menu-bar',
+    templateUrl: './menu-bar.component.html',
+    styleUrls: ['./menu-bar.component.scss'],
+    standalone: false
 })
 export class MenuBarComponent implements OnInit {
 

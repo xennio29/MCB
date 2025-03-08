@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'MCB-proxies',
-  templateUrl: './proxies.component.html',
-  styleUrls: ['./proxies.component.scss']
+    selector: 'MCB-proxies',
+    templateUrl: './proxies.component.html',
+    styleUrls: ['./proxies.component.scss'],
+    standalone: false
 })
 export class ProxiesComponent implements OnInit {
 

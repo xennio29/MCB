@@ -5,9 +5,10 @@ import { DataService, DataType } from '../data-model/data/data.service';
 import { TixChangeByEvent, TixProfil } from '../data-model/model/tixprofil';
 
 @Component({
-  selector: 'bc-tixbank',
-  templateUrl: './tixbank.component.html',
-  styleUrls: ['./tixbank.component.scss']
+    selector: 'bc-tixbank',
+    templateUrl: './tixbank.component.html',
+    styleUrls: ['./tixbank.component.scss'],
+    standalone: false
 })
 export class TixbankComponent implements OnInit {
 

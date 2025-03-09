@@ -6,9 +6,10 @@ import { TixProfil } from '../data-model/model/tixprofil';
 import { MasterChangeByEvent, MasterProfil } from '../data-model/model/masterprofil';
 
 @Component({
-  selector: 'bc-master',
-  templateUrl: './master.component.html',
-  styleUrls: ['./../tixbank/tixbank.component.scss']
+    selector: 'bc-master',
+    templateUrl: './master.component.html',
+    styleUrls: ['./../tixbank/tixbank.component.scss'],
+    standalone: false
 })
 export class MasterComponent implements OnInit {
 

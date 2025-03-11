@@ -11,7 +11,8 @@
 
     <div class="socialsContainer">
         <img [src]="discordLogo" alt="Discord" class="discordDiv" (click)="goDiscord()">
-        <img [src]="xlogo" alt="X (Twitter)" class="xDiv">
+        <img [src]="xlogo" alt="X (Twitter)" class="xDiv" (click)="goTwitter()">
+        <img [src]="instalogo" alt="Instagram" class="instaDiv" (click)="goInstagram()">
     </div>
       
       <div class="popup-container" *ngIf="showPopup">

@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { CalendarOptions } from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
+import { getEvents } from './event';
+
 
 @Component({
   selector: 'app-home',
@@ -12,6 +14,7 @@ export class HomeComponent implements OnInit {
   logo = 'assets/img/mcb_logo.png';
   discordLogo = 'assets/img/discord_logo.png';
   xlogo = 'assets/img/logo_x.png';
+  instalogo = 'assets/img/logo-instagram-png.png';
 
   // Variables for managing the popup
   showPopup = false;
@@ -27,28 +30,9 @@ export class HomeComponent implements OnInit {
     initialView: 'dayGridMonth',
     selectable: true,
     editable: true,
-    events: [
-      {
-        title: 'CR DC',
-        start: '2025-02-15',
-        description: 'Championnat régional de DC 2025',
-        extendedProps: {
-          image: 'assets/img/CRDC_2025.png' 
-        },
-        backgroundColor: 'red'
-      },
-      {
-        title: 'MQL',
-        start: '2025-03-15',
-        description: 'Main Qualifier Legacy 2025',
-        extendedProps: {
-          image: 'assets/img/MQL_2025.png' 
-        },
-        backgroundColor: 'red'
-      }
-    ],
+    events: getEvents(),  
     dateClick: this.handleDateClick.bind(this),
-    eventClick: this.handleEventClick.bind(this)
+    eventClick: this.handleEventClick.bind(this),
   };
 
   ngOnInit(): void {}
@@ -111,7 +95,13 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  goDiscord(): void {
-    // Logic for navigating to Discord
+  goDiscord(){
+    window.open("https://discord.gg/2wxRaB5aK2", "_blank");
+}
+  goTwitter(){
+    window.open("https://twitter.com/MCB_legacy31", "_blank");
+}
+  goInstagram(){
+    window.open("https://www.instagram.com/magicclubbessieres", "_blank");
   }
 }

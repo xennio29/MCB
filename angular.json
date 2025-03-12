@@ -17,15 +17,12 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": {
-              "base": "dist/MCB"
-            },
+            "outputPath": "docs", 
             "index": "src/index.html",
             "polyfills": [
               "src/polyfills.ts"
             ],
             "tsConfig": "tsconfig.app.json",
-            "baseHref": "/MCB/",
             "aot": true,
             "assets": [
               "src/favicon.ico",
@@ -62,7 +59,8 @@
                   "maximumWarning": "6kb",
                   "maximumError": "10kb"
                 }
-              ]
+              ],
+              "baseHref": "/xennio29/MCB/"
             }
           }
         },

@@ -25,7 +25,7 @@
               "src/polyfills.ts"
             ],
             "tsConfig": "tsconfig.app.json",
-            "baseHref": "/MCB/",
+            "baseHref": "xennio29/MCB/",
             "aot": true,
             "assets": [
               "src/favicon.ico",

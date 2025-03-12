@@ -1,6 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
@@ -21,7 +20,6 @@ import { ProxiesComponent } from './proxies/proxies.component';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { FullCalendarModule } from '@fullcalendar/angular';
-
 @NgModule({ declarations: [
         AppComponent,
         HomeComponent,
@@ -45,3 +43,4 @@ import { FullCalendarModule } from '@fullcalendar/angular';
         MatGridListModule,
         MatButtonToggleModule], providers: [provideHttpClient(withInterceptorsFromDi())] })
 export class AppModule { }
+

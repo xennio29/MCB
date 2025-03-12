@@ -20,9 +20,6 @@ import { ProxiesComponent } from './proxies/proxies.component';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { FullCalendarModule } from '@fullcalendar/angular';
-
-
-
 @NgModule({ declarations: [
         AppComponent,
         HomeComponent,
@@ -44,9 +41,6 @@ import { FullCalendarModule } from '@fullcalendar/angular';
         MatInputModule,
         MatExpansionModule,
         MatGridListModule,
-        MatButtonToggleModule], 
-  providers: [
-    provideHttpClient(withInterceptorsFromDi()),
-  ],
-})
-  export class AppModule { }
+        MatButtonToggleModule], providers: [provideHttpClient(withInterceptorsFromDi())] })
+export class AppModule { }
+

@@ -22,7 +22,6 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { FullCalendarModule } from '@fullcalendar/angular';
 
-
 @NgModule({ declarations: [
         AppComponent,
         HomeComponent,

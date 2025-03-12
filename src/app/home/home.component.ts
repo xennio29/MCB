@@ -30,8 +30,7 @@ export class HomeComponent implements OnInit {
     initialView: 'dayGridMonth',
     selectable: true,
     editable: true,
-    events: getEvents(),  
-    dateClick: this.handleDateClick.bind(this),
+    events: getEvents(),
     eventClick: this.handleEventClick.bind(this),
   };
 

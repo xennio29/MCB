@@ -44,5 +44,9 @@ import { FullCalendarModule } from '@fullcalendar/angular';
         MatInputModule,
         MatExpansionModule,
         MatGridListModule,
-        MatButtonToggleModule], providers: [provideHttpClient(withInterceptorsFromDi())] })
-export class AppModule { }
+        MatButtonToggleModule], 
+    export const appConfig: ApplicationConfig = {
+  providers: [
+    provideHttpClient(withInterceptorsFromDi()),
+  ],
+};

@@ -29,6 +29,24 @@ export interface Event {
         },
         backgroundColor: 'red',
       },
+      {
+        title: 'Eternal Sunday',
+        start: '2025-04-13',
+        description: 'Eternal Sunday Avril 2025',
+        extendedProps: {
+          image: 'assets/img/Eternal_sunday_04.png',
+        },
+        backgroundColor: 'red',
+      },
+      {
+        title: 'Eternal Sunday',
+        start: '2025-05-25',
+        description: 'Eternal Sunday Mai 2025',
+        extendedProps: {
+          image: 'assets/img/Eternal_sunday_05.png',
+        },
+        backgroundColor: 'red',
+      },      
     ];
   };
   

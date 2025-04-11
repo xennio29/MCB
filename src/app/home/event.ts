@@ -30,7 +30,7 @@ export interface Event {
         backgroundColor: 'red',
       },
       {
-        title: 'FNM Legacy',
+        title: '🧙 FNM Legacy',
         start: '2025-04-11',
         description: 'Avril FNM Legacy',
         extendedProps: {
@@ -47,6 +47,15 @@ export interface Event {
         },
         backgroundColor: 'red',
       },
+      {
+        title: '🧙 FNM Legacy',
+        start: '2025-05-23',
+        description: 'Mai FNM Legacy',
+        extendedProps: {
+          image: '',
+        },
+        backgroundColor: 'red',
+      },   
       {
         title: 'Eternal Sunday',
         start: '2025-05-25',

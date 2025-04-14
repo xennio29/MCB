@@ -39,7 +39,7 @@ export interface Event {
         backgroundColor: 'red',
       },
       {
-        title: 'Eternal Sunday',
+        title: '☀️ Eternal Sunday',
         start: '2025-04-13',
         description: 'Eternal Sunday Avril 2025, Peasant Vintage et Legacy',
         extendedProps: {
@@ -55,9 +55,27 @@ export interface Event {
           image: '',
         },
         backgroundColor: 'red',
+      },
+      {
+        title: '🌇 Pauper Morning',
+        start: '2025-05-25',
+        description: 'Pauper Eternal Morning',
+        extendedProps: {
+          image: 'assets/img/Eternal_sunday_05.png',
+        },
+        backgroundColor: 'red',
+      },
+      {
+        title: '🌇 Vintage Morning',
+        start: '2025-05-25',
+        description: 'Vintage Eternal Morning',
+        extendedProps: {
+          image: 'assets/img/Eternal_sunday_05.png',
+        },
+        backgroundColor: 'red',
       },   
       {
-        title: 'Eternal Sunday',
+        title: '☀️ Eternal Sunday',
         start: '2025-05-25',
         description: 'Eternal Sunday Mai 2025',
         extendedProps: {

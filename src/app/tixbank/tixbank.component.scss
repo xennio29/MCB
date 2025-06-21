@@ -82,10 +82,14 @@ table {
 }
 
 .qualified {
-    background-color: green;
+    background-color: lightgreen;
     font-weight: bold;
 }
 
 mat-expansion-panel {
     margin : 5px;
+}
+
+h3 {
+    font-weight: bold;
 }

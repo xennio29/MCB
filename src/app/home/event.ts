@@ -83,6 +83,33 @@ export interface Event {
         },
         backgroundColor: 'red',
       },      
+      {
+        title: 'Team TRIO',
+        start: '2025-07-04',
+        description: 'Team TRIO 2025',
+        extendedProps: {
+          image: 'assets/img/CDF.png',},
+        backgroundColor: 'red',
+      },
+      {
+        title: '🧙 Last Chance Qualifier',
+        start: '2025-07-05',
+        description: 'Last chance qualifier 2025 pour le Championnat de France',
+        extendedProps: {
+          image: 'assets/img/CDF.png',
+        },
+        backgroundColor: 'red',
+      },
+      {
+        title: '☀️ Final du Championnat de France 2025',
+        start: '2025-07-06',
+        description: 'La finale tant attendue du Championnat de France 2025',
+        extendedProps: {
+          image: 'assets/img/CDF.jpg',
+        },
+        backgroundColor: 'red',
+      }
+    
     ];
   };
   

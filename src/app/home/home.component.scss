@@ -104,4 +104,21 @@ full-calendar {
     display: block;
     margin: 10px 0;
   }
-  
+#twitter-widget-container,
+#instagram-widget-container {
+  position: fixed;
+  top: 100px;
+  width: 300px;
+  padding: 10px;
+  z-index: 9999; // plus haut que le reste
+}
+
+
+#instagram-widget-container {
+  right: 0;
+}
+
+
+
+
+

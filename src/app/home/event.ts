@@ -91,7 +91,88 @@ export interface Event {
         },
         backgroundColor: 'red',
       },
-    
+      {
+        title: '🌇 Open CDF Legacy',
+        start: '2025-09-28',
+        description: 'Open CDF Legacy Septembre saison 2025/2026',
+        extendedProps: {
+          image: '',
+        },
+        backgroundColor: 'red',
+      },
+      {
+        title: '🌇 Open CDF Legacy',
+        start: '2025-10-12',
+        description: 'Open CDF Legacy octobre saison 2025/2026',
+        extendedProps: {
+          image: '',
+        },
+        backgroundColor: 'red',
+      },
+      {
+        title: '🌇 Win a Biland DC',
+        start: '2025-10-12',
+        description: 'Win a Biland DC. Prépare toi pour le RelicFest',
+        extendedProps: {
+          image: '',
+        },
+        backgroundColor: 'red',
+      },
+      {
+        title: '🧙 FNM Legacy',
+        start: '2025-10-24',
+        description: 'Octobre FNM Legacy',
+        extendedProps: {
+          image: '',
+        },
+        backgroundColor: 'red',
+      },
+      {
+        title: '🧙 FNM Legacy',
+        start: '2025-11-21',
+        description: 'Novembre FNM Legacy',
+        extendedProps: {
+          image: '',
+        },
+        backgroundColor: 'red',
+      },
+      {
+        title: '🌇 Open CDF Legacy',
+        start: '2025-11-23',
+        description: 'Open CDF Legacy novembre saison 2025/2026',
+        extendedProps: {
+          image: '',
+        },
+        backgroundColor: 'red',
+      },
+      {
+        title: '🧙 FNM Legacy',
+        start: '2025-12-05',
+        description: 'Decembre FNM Legacy',
+        extendedProps: {
+          image: '',
+        },
+        backgroundColor: 'red',
+      },
+      {
+        title: '🏆 Final des Masters',
+        start: '2025-12-07',
+        description: 'Final des Masters 2025',
+        extendedProps: {
+          image: '',
+        },
+        backgroundColor: 'red',
+      },
+      {
+        title: '🌇 Open CDF Legacy',
+        start: '2025-12-07',
+        description: 'Open CDF Legacy Decembre saison 2025/2026',
+        extendedProps: {
+          image: '',
+        },
+        backgroundColor: 'red',
+      },            
+
     ];
   };
   

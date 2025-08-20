@@ -108,6 +108,24 @@ export interface Event {
           image: 'assets/img/CDF.jpg',
         },
         backgroundColor: 'red',
+      },
+      {
+        title: '🌇 Pauper Morning',
+        start: '2025-08-31',
+        description: 'Pauper Eternal Morning',
+        extendedProps: {
+          image: 'assets/img/aout.png',
+        },
+        backgroundColor: 'red',
+      },
+      {
+        title: '🌇 Open CDF Legacy',
+        start: '2025-08-31',
+        description: 'Première Open CDF Legacy saison 2025/2026',
+        extendedProps: {
+          image: 'assets/img/aout.png',
+        },
+        backgroundColor: 'red',
       }
     
     ];

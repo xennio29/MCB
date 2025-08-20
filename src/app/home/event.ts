@@ -146,6 +146,15 @@ export interface Event {
         backgroundColor: 'red',
       },
       {
+        title: '🎫 Open qualifier regional Pauper',
+        start: '2025-11-23',
+        description: 'Qualifier Regional Pauper 2025',
+        extendedProps: {
+          image: '',
+        },
+        backgroundColor: 'red',
+      },
+      {
         title: '🧙 FNM Legacy',
         start: '2025-12-05',
         description: 'Decembre FNM Legacy',

@@ -121,12 +121,21 @@ export interface Event {
       {
         title: '🌇 Open CDF Legacy',
         start: '2025-08-31',
-        description: 'Première Open CDF Legacy saison 2025/2026',
+        description: 'Premier Open CDF Legacy saison 2025/2026',
         extendedProps: {
           image: 'assets/img/aout.png',
         },
         backgroundColor: 'red',
-      }
+      },
+      {
+        title: '🧙 FNM Legacy',
+        start: '2025-09-12',
+        description: 'Septembre FNM Legacy',
+        extendedProps: {
+          image: '',
+        },
+        backgroundColor: 'red',
+      },
     
     ];
   };

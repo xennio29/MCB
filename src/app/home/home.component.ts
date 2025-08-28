@@ -35,7 +35,25 @@ export class HomeComponent implements OnInit {
     eventClick: this.handleEventClick.bind(this),
   };
 
-  ngOnInit(): void {}
+ngOnInit(): void {
+}
+
+ngAfterViewInit(): void {
+  this.loadElfsightScript();
+}
+
+loadElfsightScript(): void {
+  const scriptId = 'elfsight-script';
+  if (!document.getElementById(scriptId)) {
+    const script = document.createElement('script');
+    script.id = scriptId;
+    script.src = 'https://static.elfsight.com/platform/platform.js';
+    script.async = true;
+    document.body.appendChild(script);
+  }
+}
+
+
 
   handleDateClick(info: any): void {
     let eventTitle = prompt("Event name:");

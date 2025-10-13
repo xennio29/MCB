@@ -3,6 +3,8 @@ B Matthieu,2025-01-05 00:00:00,OPEN,3.7
 B Matthieu,2025-02-15 00:00:00,OPEN,9.9
 B Matthieu,2025-03-14 00:00:00,FNM,3.8
 B Matthieu,2025-04-13 00:00:00,OPEN,7.8
+B Matthieu,2025-10-12 00:00:00,8MEN,2.1
+B Matthieu,2025-10-12 00:00:00,OPEN,5
 Charles Jérémy,2025-03-15 00:00:00,MQL,14.9
 Charles Jérémy,2025-04-13 00:00:00,OPEN,4.4
 Charles Jérémy,2025-08-31 00:00:00,OPEN,4.3
@@ -10,6 +12,7 @@ Clément Quentin,2025-03-15 00:00:00,MQL,5.7
 Clément Quentin,2025-03-16 00:00:00,OPEN,13.4
 Dufour Jérôme,2025-04-11 00:00:00,FNM,1.8
 Dufour Jérôme,2025-05-25 00:00:00,OPEN,4.5
+Dufour Jérôme,2025-10-12 00:00:00,OPEN,5
 Erkens Jules,2025-02-15 00:00:00,OPEN,4.5
 Erkens Jules,2025-05-25 00:00:00,OPEN,4.5
 Erkens Jules,2025-06-12 00:00:00,OPEN,9.8
@@ -27,10 +30,12 @@ Gadchaux Laurent,2025-04-13 00:00:00,OPEN,9.5
 Gadchaux Laurent,2025-05-25 00:00:00,OPEN,4.5
 Gamot Adrien,2025-05-25 00:00:00,OPEN,4.5
 Gamot Adrien,2025-09-28 00:00:00,OPEN,7.7
+Gamot Adrien,2025-10-12 00:00:00,OPEN,9.1
 Guichard Marion,2025-01-24 00:00:00,FNM,7.3
 Guichard Marion,2025-04-13 00:00:00,OPEN,5.3
 Khoury Jim,2025-05-25 00:00:00,OPEN,4.5
 Khoury Jim,2025-09-12 00:00:00,FNM,3.8
+Khoury Jim,2025-10-12 00:00:00,OPEN,15.5
 Le Guerroué Mana,2025-06-12 00:00:00,OPEN,5
 Levy Ido,2025-01-24 00:00:00,FNM,3.9
 Levy Ido,2025-02-15 00:00:00,OPEN,4.5
@@ -52,10 +57,12 @@ Mathurin Flo,2025-05-25 00:00:00,OPEN,8.3
 Mathurin Flo,2025-08-31 00:00:00,OPEN,7.7
 Mathurin Flo,2025-09-28 00:00:00,8MEN,2.3
 Mathurin Flo,2025-09-28 00:00:00,OPEN,7.7
+Mathurin Flo,2025-10-12 00:00:00,OPEN,5
 Montes Morgan,2025-02-15 00:00:00,OPEN,4.5
 Montes Morgan,2025-03-15 00:00:00,MQL,10.1
 Montes Morgan,2025-09-28 00:00:00,8MEN,5
 Montes Morgan,2025-09-28 00:00:00,OPEN,4.3
+Montes Morgan,2025-10-12 00:00:00,OPEN,9.1
 Obstoy Cédric,2025-02-14 00:00:00,FNM,2.5
 Obstoy Cédric,2025-03-16 00:00:00,OPEN,4.2
 Panda Michel,2025-03-15 00:00:00,MQL,5.7
@@ -64,6 +71,8 @@ Panda Michel,2025-04-13 00:00:00,OPEN,4.4
 Panda Michel,2025-05-25 00:00:00,OPEN,5.5
 Panda Michel,2025-08-31 00:00:00,OPEN,4.3
 Panda Michel,2025-09-28 00:00:00,OPEN,13.7
+Panda Michel,2025-10-12 00:00:00,8MEN,2.1
+Panda Michel,2025-10-12 00:00:00,OPEN,9.1
 Picot Julien,2025-02-15 00:00:00,OPEN,4.5
 Pottier Camille,2025-03-15 00:00:00,MQL,10.1
 Pottier Camille,2025-03-16 00:00:00,OPEN,4.2
@@ -78,8 +87,10 @@ Pottier Quentin,2025-08-31 00:00:00,OPEN,7.7
 Pottier Quentin,2025-09-12 00:00:00,FNM,3.8
 Pottier Quentin,2025-09-28 00:00:00,8MEN,5
 Pottier Quentin,2025-09-28 00:00:00,OPEN,7.7
+Pottier Quentin,2025-10-12 00:00:00,OPEN,5
 Rouger Philippe,2025-02-15 00:00:00,OPEN,8.1
 Rouger Philippe,2025-09-28 00:00:00,OPEN,4.3
+Rouger Philippe,2025-10-12 00:00:00,OPEN,5
 Rousseau Jimmy,2025-02-15 00:00:00,OPEN,4.5
 Salgado Paul,2025-01-05 00:00:00,OPEN,7.5
 Salgado Paul,2025-02-14 00:00:00,FNM,3.7
@@ -88,15 +99,20 @@ Salgado Paul,2025-03-16 00:00:00,OPEN,4.2
 Salgado Paul,2025-08-31 00:00:00,OPEN,4.3
 Salgado Paul,2025-09-12 00:00:00,FNM,7
 Salgado Paul,2025-09-28 00:00:00,8MEN,2.3
+Salgado Paul,2025-10-12 00:00:00,OPEN,5
 Salmon Jean,2025-03-16 00:00:00,SIDE OPEN,1.9
 Salmon Jean,2025-04-13 00:00:00,OPEN,7.8
 Salmon Jean,2025-09-28 00:00:00,8MEN,2.3
 Salmon Jean,2025-09-28 00:00:00,OPEN,4.3
+Salmon Jean,2025-10-12 00:00:00,OPEN,5
+Savignac Pierre,2025-10-12 00:00:00,8MEN,2.1
+Savignac Pierre,2025-10-12 00:00:00,OPEN,5
 Staehle Valentin,2025-03-16 00:00:00,OPEN,4.2
 Troy Jean Michel,2025-02-14 00:00:00,FNM,2.5
 Troy Jean Michel,2025-04-11 00:00:00,FNM,1.8
 Troy Jean Michel,2025-09-28 00:00:00,8MEN,2.3
 Vacilotto Vincent,2025-05-23 00:00:00,FNM,1.6
+Vacilotto Vincent,2025-10-12 00:00:00,8MEN,2.1
 Vignane Rémi,2025-01-05 00:00:00,OPEN,3.7
 Vignane Rémi,2025-01-24 00:00:00,FNM,3.9
 Vignane Rémi,2025-03-14 00:00:00,FNM,7
@@ -109,3 +125,5 @@ Vignane Rémi,2025-05-25 00:00:00,OPEN,8.3
 Vignane Rémi,2025-08-31 00:00:00,OPEN,4.3
 Vignane Rémi,2025-09-28 00:00:00,8MEN,2.3
 Vignane Rémi,2025-09-28 00:00:00,OPEN,4.3
+Vignane Rémi,2025-10-12 00:00:00,8MEN,2.6
+Vignane Rémi,2025-10-12 00:00:00,OPEN,5

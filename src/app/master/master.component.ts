@@ -31,6 +31,14 @@ export class MasterComponent implements OnInit {
 
   ngOnInit(): void {
   }
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value.trim().toLowerCase();
+    this.filteredMasterProfils = this.masterProfils.filter(masterProfil => 
+      (masterProfil.firstName + ' ' + masterProfil.lastName).toLowerCase().includes(filterValue)
+    );
+  }
+
   generateDataSource(masterProfil: MasterProfil): MatTableDataSource<MasterChangeByEvent> {
     let sortedMasterChangeEvent = masterProfil.masterChanges.sort( (a, b) => a.date < b.date ? 1 : -1);
     return new MatTableDataSource(sortedMasterChangeEvent);

@@ -33,10 +33,39 @@
           <div *ngIf="editedImage">
             <img [src]="editedImage" alt="Event image" class="event-image" />
           </div>
+
+          <!-- Reservation Section (for logged in users) -->
+          <div *ngIf="currentUser$ | async; else loginToReserve" class="reservation-section">
+            <div style="display: flex; gap: 10px; margin-top: 15px;">
+              <mat-form-field appearance="outline" style="flex: 1;">
+                <mat-label>Prénom</mat-label>
+                <input matInput [(ngModel)]="resFirstName" name="resFirstName" required>
+              </mat-form-field>
+              <mat-form-field appearance="outline" style="flex: 1;">
+                <mat-label>Nom</mat-label>
+                <input matInput [(ngModel)]="resLastName" name="resLastName" required>
+              </mat-form-field>
+            </div>
+
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Commentaire (ex: Deck/Carte de prêt)</mat-label>
+              <textarea matInput [(ngModel)]="reservationComment" name="comment"></textarea>
+            </mat-form-field>
+
+            <div style="margin-bottom: 15px;">
+              <mat-checkbox [(ngModel)]="resEatOnSite" name="eatOnSite">Mange sur place ?</mat-checkbox>
+            </div>
+
+            <button mat-raised-button color="primary" (click)="onReserve()" class="full-width">Réserver ma place</button>
+          </div>
+          <ng-template #loginToReserve>
+            <p><i>Veuillez vous connecter pour réserver votre place.</i></p>
+          </ng-template>
       
-          <!-- Delete buttons -->
-          <button (click)="closePopup()" style="background-color: #000000; color: white; padding: 8px 15px; border: none; border-radius: 5px; cursor: pointer;">
-            Close</button>
+          <div class="popup-actions" style="margin-top: 20px; display: flex; gap: 10px;">
+            <button (click)="closePopup()" mat-button>Fermer</button>
+            <button *ngIf="isAdmin" (click)="deleteEvent()" mat-raised-button color="warn">Supprimer l'événement</button>
+          </div>
         </div>
       </div>
 

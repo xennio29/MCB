@@ -17,7 +17,7 @@
         <mat-expansion-panel *ngFor="let tixProfil of filteredTixProfils">
           <mat-expansion-panel-header>
             <mat-panel-title>
-              {{tixProfil.name}}
+              {{tixProfil.firstName}} {{tixProfil.lastName}}
             </mat-panel-title>
             <mat-panel-description>
               {{callGetTotalTix(tixProfil)}}

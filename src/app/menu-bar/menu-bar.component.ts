@@ -1,5 +1,8 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { SupabaseService } from '../core/supabase.service';
+import { Observable } from 'rxjs';
+import { User } from '@supabase/supabase-js';
 
 @Component({
     selector: 'bc-menu-bar',
@@ -13,9 +16,16 @@ export class MenuBarComponent implements OnInit {
   rootName = '';
 
   @Output() public sidenavToggle = new EventEmitter();
+  
+  currentUser$: Observable<User | null>;
+  profile$: Observable<any | null>;
 
   constructor(private route: ActivatedRoute,
-              private router: Router) { }
+              private router: Router,
+              private supabase: SupabaseService) {
+    this.currentUser$ = this.supabase.currentUser$;
+    this.profile$ = this.supabase.profile$;
+  }
 
   ngOnInit(): void {
 
@@ -41,5 +51,11 @@ export class MenuBarComponent implements OnInit {
 
   public onToggleSidenav = () => {
     this.sidenavToggle.emit();
+  }
+
+  logout() {
+    this.supabase.signOut().then(() => {
+      this.router.navigate(['/home']);
+    });
   }
 }

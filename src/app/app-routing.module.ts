@@ -4,6 +4,10 @@ import { HomeComponent } from './home/home.component';
 import { TixbankComponent } from './tixbank/tixbank.component';
 import { MasterComponent } from './master/master.component';
 import { ProxiesComponent } from './proxies/proxies.component';
+import { LoginComponent } from './auth/login/login.component';
+import { RegisterComponent } from './auth/register/register.component';
+import { AdminDashboardComponent } from './admin/admin-dashboard/admin-dashboard.component';
+import { AdminGuard } from './core/auth.guard';
 
 export const routes: Routes = [
   {path: 'tixbank', component: TixbankComponent },
@@ -11,6 +15,9 @@ export const routes: Routes = [
   {path: 'proxies', component: ProxiesComponent },
 
   {path: 'masters', component: MasterComponent },
+  {path: 'login', component: LoginComponent },
+  {path: 'register', component: RegisterComponent },
+  {path: 'admin', component: AdminDashboardComponent, canActivate: [AdminGuard] },
 
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: '**', redirectTo: '/home', pathMatch: 'full' },

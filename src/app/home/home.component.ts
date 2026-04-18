@@ -2,7 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { CalendarOptions } from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
-import { getEvents } from './event';
+import { SupabaseService } from '../core/supabase.service';
+import { DataService } from '../data-model/data/data.service';
+import { Observable } from 'rxjs';
+import { User } from '@supabase/supabase-js';
 
 
 @Component({
@@ -25,18 +28,56 @@ export class HomeComponent implements OnInit {
   editedImage: string = ''; // Image URL
   uploadedImage: File | null = null; // Image file
   isEditing: boolean = false; 
+  reservationComment: string = '';
+  resFirstName: string = '';
+  resLastName: string = '';
+  resEatOnSite: boolean = false;
+  isAdmin: boolean = false;
+  currentUser$: Observable<User | null>;
 
   calendarOptions: CalendarOptions = {
     plugins: [dayGridPlugin, interactionPlugin],
     initialView: 'dayGridMonth',
     selectable: true,
     editable: true,
-    events: getEvents(),
+    events: [],
     eventClick: this.handleEventClick.bind(this),
+    dateClick: this.handleDateClick.bind(this),
   };
 
-ngOnInit(): void {
-}
+  constructor(private supabase: SupabaseService, private dataService: DataService) {
+    this.currentUser$ = this.supabase.currentUser$;
+    this.supabase.profile$.subscribe(profile => {
+      if (profile) {
+        this.resFirstName = profile.first_name || '';
+        this.resLastName = profile.last_name || '';
+      }
+    });
+  }
+
+  ngOnInit(): void {
+    this.loadEvents();
+    this.checkAdmin();
+  }
+
+  async checkAdmin() {
+    this.isAdmin = await this.supabase.isAdmin();
+  }
+
+  async loadEvents() {
+    const { data } = await this.dataService.getEvents();
+    if (data) {
+      this.calendarOptions.events = data.map(e => ({
+        id: e.id,
+        title: e.title,
+        start: e.event_date,
+        description: e.description,
+        extendedProps: {
+          image: e.image_url
+        }
+      }));
+    }
+  }
 
 ngAfterViewInit(): void {
   this.loadElfsightScript();
@@ -55,20 +96,26 @@ loadElfsightScript(): void {
 
 
 
-  handleDateClick(info: any): void {
-    let eventTitle = prompt("Event name:");
-    if (eventTitle) {
-      let eventDescription = prompt("Event description:");
-      const imageFile = prompt("Image URL (or leave empty):");
+  async handleDateClick(info: any) {
+    if (!this.isAdmin) return;
 
-      info.view.calendar.addEvent({
-        title: eventTitle,
-        start: info.dateStr,
-        description: eventDescription,
-        extendedProps: {
-          image: imageFile || ''
-        }
-      });
+    let eventTitle = prompt("Nom de l'événement :");
+    if (eventTitle) {
+      let eventDescription = prompt("Description :");
+      const imageFile = prompt("URL Image (optionnel) :");
+
+      const { error } = await this.dataService.createEvent(
+        eventTitle, 
+        info.dateStr, 
+        eventDescription || '', 
+        imageFile || ''
+      );
+
+      if (!error) {
+        this.loadEvents();
+      } else {
+        alert("Erreur lors de la création de l'événement");
+      }
     }
   }
 
@@ -85,15 +132,42 @@ loadElfsightScript(): void {
     this.showPopup = true;
     this.isEditing = false; // Reset the edit mode
 }
-  deleteEvent(): void {
-    if (this.eventToEdit) {
+  async deleteEvent() {
+    if (this.eventToEdit && this.isAdmin) {
       const eventTitle = this.eventToEdit.title;
-      const deleteEvent = confirm(`Are you sure you want to delete the event "${eventTitle}"?`);
+      const deleteEvent = confirm(`Voulez-vous vraiment supprimer l'événement "${eventTitle}" ?`);
       if (deleteEvent) {
-        this.eventToEdit.remove();  // Delete the event
-        alert(`The event "${eventTitle}" has been deleted.`);
-        this.showPopup = false;  // Hide the popup after deletion
-        this.eventToEdit = null;  // Reset the event to delete
+        const { error } = await this.dataService.deleteEvent(this.eventToEdit.id);
+        if (!error) {
+          this.loadEvents();
+          this.showPopup = false;
+        }
+      }
+    }
+  }
+
+  async onReserve() {
+    if (this.eventToEdit) {
+      if (!this.resFirstName || !this.resLastName) {
+        alert('Le Nom et le Prénom sont obligatoires pour la réservation.');
+        return;
+      }
+
+      try {
+        const { error } = await this.dataService.makeReservation(
+          this.eventToEdit.id, 
+          this.reservationComment,
+          this.resFirstName,
+          this.resLastName,
+          this.resEatOnSite
+        );
+        if (error) throw error;
+        alert('Réservation réussie !');
+        this.showPopup = false;
+        this.reservationComment = '';
+        this.resEatOnSite = false;
+      } catch (e: any) {
+        alert('Erreur : ' + (e.message || 'Impossible de réserver. Vous avez peut-être déjà une réservation pour cet événement.'));
       }
     }
   }

@@ -1,30 +1,49 @@
-<mat-toolbar div fxLayout="row" fxLayoutAlign="space-between center" >
-    <div class="small-menu-bar" fxHide.gt-xs>
-        <button mat-icon-button (click)="onToggleSidenav()">
-            <mat-icon>list</mat-icon>
-        </button>
-    </div>
-    <div class="home" routerLink="/home">
-        <span>MCB</span>
-        <span fxHide.gt-xs> - {{rootName}}</span>
-    </div>
-    <div class="not-home" fxLayout="row" fxLayoutGap="5%" fxLayoutAlign="center center" fxHide.xs>
-        <div class="menu" routerLink="/tixbank" routerLinkActive="is-active">
+<mat-toolbar>
+    <!-- Left Section (3 items) -->
+    <div class="header-section left" fxFlex fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="20px">
+        <div class="small-menu-bar" fxHide.gt-xs>
+            <button mat-icon-button (click)="onToggleSidenav()" style="color: white;">
+                <mat-icon>list</mat-icon>
+            </button>
+        </div>
+        <div class="home-text" routerLink="/home" fxHide.xs>
+            MCB
+        </div>
+        <div class="menu" routerLink="/tixbank" routerLinkActive="is-active" fxHide.xs>
             <span>Vos Points TIX</span>
         </div>
-    </div>
-    <div class="whiteLogo" class="whiteLogo" routerLink="/home" routerLinkActive="home-is-active">
-        <img [src]="whiteLogo" class="whiteLogo">
-    </div>
-    <div class="not-home" fxLayout="row" fxLayoutGap="5px" fxLayoutAlign="center center" fxHide.xs>
-        <div class="menu" routerLink="/proxies" routerLinkActive="is-active">
+        <div class="menu" routerLink="/proxies" routerLinkActive="is-active" fxHide.xs>
             <span>Proxies</span>
         </div>
     </div>
-    <div class="not-home" fxLayout="row" fxLayoutGap="5%" fxLayoutAlign="center center" fxHide.xs>
-        <div class="menu" routerLink="/masters" routerLinkActive="is-active">
-            <span>Classement des Masters</span>
+
+    <!-- Center Section (Logo) -->
+    <div class="header-section center" fxFlex fxLayout="row" fxLayoutAlign="center center">
+        <div class="whiteLogo" routerLink="/home">
+            <img [src]="whiteLogo" class="whiteLogo">
         </div>
     </div>
 
+    <!-- Right Section (3 items/groups) -->
+    <div class="header-section right" fxFlex fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="20px">
+        <div class="menu" routerLink="/masters" routerLinkActive="is-active" fxHide.xs>
+            <span>Masters</span>
+        </div>
+
+        <div class="auth-group" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="15px">
+            <div class="menu admin-btn" *ngIf="(profile$ | async)?.role === 'admin'" routerLink="/admin" style="color: #ffd740; font-weight: bold;">
+                ADMIN
+            </div>
+            
+            <ng-container *ngIf="!(currentUser$ | async); else loggedIn">
+                <div class="menu" routerLink="/login">Connexion</div>
+                <div class="menu" routerLink="/register">Inscription</div>
+            </ng-container>
+
+            <ng-template #loggedIn>
+                <span class="welcome-text" fxHide.xs>Bonjour, {{ (profile$ | async)?.first_name }}</span>
+                <div class="menu" (click)="logout()">Déconnexion</div>
+            </ng-template>
+        </div>
+    </div>
 </mat-toolbar>

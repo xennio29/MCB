@@ -38,7 +38,7 @@ export class TixbankComponent implements OnInit {
 
     this.dataService.tixProfilEmitter.subscribe( result => {
       this.tixProfils = result;
-      this.tixProfils.sort((profilA, profilB) => profilA.name > profilB.name ? 1 : -1);
+      this.tixProfils.sort((profilA, profilB) => profilA.lastName > profilB.lastName ? 1 : -1);
       this.filteredTixProfils = this.tixProfils;
     });
 
@@ -50,7 +50,9 @@ export class TixbankComponent implements OnInit {
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value.trim().toLowerCase();
-    this.filteredTixProfils = this.tixProfils.filter(tixProfil => tixProfil.name.trim().toLowerCase().match('.*' + filterValue + '.*'));
+    this.filteredTixProfils = this.tixProfils.filter(tixProfil => 
+      (tixProfil.firstName + ' ' + tixProfil.lastName).toLowerCase().includes(filterValue)
+    );
   }
 
   callGetTotalTix(tixProfil : TixProfil) {

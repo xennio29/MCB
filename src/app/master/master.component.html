@@ -2,12 +2,17 @@
 
     <h2>Classement des Masters</h2>
     <p class="update-date">Dernière mise à jour : 16/03/2026</p>
+    
+    <mat-form-field>
+        <mat-label>Filter</mat-label>
+        <input matInput (keyup)="applyFilter($event)" placeholder="nom/prénom" #input>
+    </mat-form-field>
 
     <mat-accordion>
         <mat-expansion-panel *ngFor="let masterProfil of filteredMasterProfils; index as rank" [ngClass]="rank < 8 ? 'qualified' : ''">
           <mat-expansion-panel-header>
             <mat-panel-title>
-              {{ masterProfil.name }}
+              {{ masterProfil.firstName }} {{ masterProfil.lastName }}
             </mat-panel-title>
             <mat-panel-description>
               {{ masterProfil.getTotalMasterPoints() }}

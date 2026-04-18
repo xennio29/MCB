@@ -1,0 +1,97 @@
+.auth-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: calc(100vh - 80px);
+  background-color: white; /* Clean white background as requested */
+  position: relative;
+  overflow: hidden;
+}
+
+.logo-background {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(1.5);
+    opacity: 0.1;
+    z-index: 0;
+    pointer-events: none;
+}
+
+.bg-logo {
+    width: 40vw;
+    height: auto;
+    max-width: 100%;
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 400px;
+  padding: 30px;
+  background: rgba(255, 255, 255, 0.9); /* Semi-transparent to see the logo behind */
+  color: #333;
+  border-radius: 12px;
+  border: 1px solid rgba(192, 18, 18, 0.2);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+  z-index: 1; /* Above the logo */
+}
+
+mat-card-title {
+  font-size: 1.8rem !important;
+  font-weight: bold !important;
+  text-align: center;
+  margin-bottom: 25px !important;
+  color: #c01212;
+}
+
+.full-width {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.error-message {
+  color: #f44336;
+  background: rgba(244, 67, 54, 0.1);
+  padding: 10px;
+  border-radius: 4px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.login-btn {
+  height: 50px;
+  font-size: 1.1rem;
+  background-color: #c01212;
+  color: white;
+  border: none;
+  font-weight: bold;
+  
+  &:disabled {
+    opacity: 0.5;
+  }
+  
+  &:hover:not(:disabled) {
+    background-color: #a00f0f;
+  }
+}
+
+mat-card-actions {
+  display: flex;
+  justify-content: center;
+  margin-top: 15px;
+  
+  button {
+    color: #c01212;
+    font-weight: 500;
+  }
+}
+
+/* Customizing Material Form Fields for Light Mode with Red accent */
+::ng-deep {
+  .mat-form-field-appearance-outline.mat-focused .mat-form-field-outline-thick {
+    color: #c01212 !important;
+  }
+  .mat-form-field-appearance-outline.mat-focused .mat-form-field-label {
+    color: #c01212 !important;
+  }
+}

@@ -1,0 +1,168 @@
+<div class="container container-admin">
+  <h2>Administration</h2>
+
+  <mat-tab-group>
+    <!-- TIX Management -->
+    <mat-tab label="Gestion TIX">
+      <div class="tab-content">
+        <h3>Ajouter des TIX</h3>
+        <form (ngSubmit)="onAddTix()" #tixForm="ngForm">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Rechercher un joueur existant</mat-label>
+            <input type="text"
+                   placeholder="Commencez à taper un nom..."
+                   matInput
+                   [formControl]="playerSearchControl"
+                   [matAutocomplete]="autoTix">
+            <mat-autocomplete #autoTix="matAutocomplete" (optionSelected)="onPlayerSelected($event.option.value)">
+              <mat-option *ngFor="let player of filteredPlayers | async" [value]="player">
+                {{player.fullName}}
+              </mat-option>
+            </mat-autocomplete>
+            <mat-icon matSuffix>search</mat-icon>
+            <mat-hint>Remplira automatiquement le Prénom et le Nom ci-dessous</mat-hint>
+          </mat-form-field>
+
+          <div class="row">
+            <mat-form-field appearance="outline" class="col">
+              <mat-label>Prénom</mat-label>
+              <input matInput [(ngModel)]="tixData.firstName" name="firstName" required>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="col">
+              <mat-label>Nom</mat-label>
+              <input matInput [(ngModel)]="tixData.lastName" name="lastName" required>
+            </mat-form-field>
+          </div>
+          <div class="row">
+            <mat-form-field appearance="outline" class="col">
+              <mat-label>Montant (+/-)</mat-label>
+              <input matInput type="number" [(ngModel)]="tixData.amount" name="amount" required>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="col">
+              <mat-label>Nom de l'événement</mat-label>
+              <input matInput [(ngModel)]="tixData.eventName" name="eventName" required>
+            </mat-form-field>
+          </div>
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Date</mat-label>
+            <input matInput [matDatepicker]="picker" [(ngModel)]="tixData.date" name="date" required>
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+          <button mat-raised-button color="primary" [disabled]="!tixForm.valid || loading">Ajouter</button>
+        </form>
+      </div>
+    </mat-tab>
+
+    <!-- Master Management -->
+    <mat-tab label="Gestion Masters">
+      <div class="tab-content">
+        <h3>Ajouter des points Master</h3>
+        <form (ngSubmit)="onAddMaster()" #masterForm="ngForm">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Rechercher un joueur existant</mat-label>
+            <input type="text"
+                   placeholder="Commencez à taper un nom..."
+                   matInput
+                   [formControl]="playerSearchControl"
+                   [matAutocomplete]="autoMaster">
+            <mat-autocomplete #autoMaster="matAutocomplete" (optionSelected)="onPlayerSelected($event.option.value)">
+              <mat-option *ngFor="let player of filteredPlayers | async" [value]="player">
+                {{player.fullName}}
+              </mat-option>
+            </mat-autocomplete>
+            <mat-icon matSuffix>search</mat-icon>
+            <mat-hint>Remplira automatiquement le Prénom et le Nom ci-dessous</mat-hint>
+          </mat-form-field>
+
+          <div class="row">
+            <mat-form-field appearance="outline" class="col">
+              <mat-label>Prénom</mat-label>
+              <input matInput [(ngModel)]="masterData.firstName" name="firstName" required>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="col">
+              <mat-label>Nom</mat-label>
+              <input matInput [(ngModel)]="masterData.lastName" name="lastName" required>
+            </mat-form-field>
+          </div>
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Points</mat-label>
+            <input matInput type="number" [(ngModel)]="masterData.points" name="points" required>
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Date de l'event</mat-label>
+            <input matInput [matDatepicker]="pickerM" [(ngModel)]="masterData.date" name="date" required>
+            <mat-datepicker-toggle matSuffix [for]="pickerM"></mat-datepicker-toggle>
+            <mat-datepicker #pickerM></mat-datepicker>
+          </mat-form-field>
+          <button mat-raised-button color="primary" [disabled]="!masterForm.valid || loading">Ajouter</button>
+        </form>
+      </div>
+    </mat-tab>
+
+    <!-- Events Management -->
+    <mat-tab label="Evénements">
+      <div class="tab-content">
+        <h3>Créer un événement</h3>
+        <form (ngSubmit)="onCreateEvent()" #eventForm="ngForm">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Titre de l'événement</mat-label>
+            <input matInput [(ngModel)]="eventData.title" name="title" required>
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Description</mat-label>
+            <textarea matInput [(ngModel)]="eventData.description" name="description"></textarea>
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Date</mat-label>
+            <input matInput [matDatepicker]="pickerE" [(ngModel)]="eventData.date" name="date" required>
+            <mat-datepicker-toggle matSuffix [for]="pickerE"></mat-datepicker-toggle>
+            <mat-datepicker #pickerE></mat-datepicker>
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Image URL</mat-label>
+            <input matInput [(ngModel)]="eventData.image" name="image">
+          </mat-form-field>
+          <button mat-raised-button color="primary" [disabled]="!eventForm.valid || loading">Créer l'événement</button>
+        </form>
+      </div>
+    </mat-tab>
+
+    <!-- Player Management -->
+    <mat-tab label="Gestion Joueurs">
+      <div class="tab-content">
+        <h3>Gérer / Supprimer un joueur</h3>
+        <p class="warning-text">Attention : La suppression d'un historique est irréversible.</p>
+        
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Rechercher le joueur à gérer</mat-label>
+          <input type="text"
+                 placeholder="Chercher par nom..."
+                 matInput
+                 [formControl]="playerManageControl"
+                 [matAutocomplete]="autoManage">
+          <mat-autocomplete #autoManage="matAutocomplete" (optionSelected)="onPlayerSelectedForManage($event.option.value)">
+            <mat-option *ngFor="let player of filteredPlayersManage | async" [value]="player">
+              {{player.fullName}}
+            </mat-option>
+          </mat-autocomplete>
+          <mat-icon matSuffix>person_search</mat-icon>
+        </mat-form-field>
+
+        <div *ngIf="selectedPlayerForManage" class="player-actions">
+          <h4>Joueur sélectionné : {{selectedPlayerForManage.fullName}}</h4>
+          
+          <div fxLayout="row" fxLayoutGap="20px">
+            <button mat-raised-button color="warn" (click)="onDeletePlayerTix()" [disabled]="loading">
+                Supprimer tout l'historique TIX
+            </button>
+            
+            <button mat-raised-button color="warn" (click)="onDeletePlayerMasters()" [disabled]="loading">
+                Supprimer tout l'historique Master
+            </button>
+          </div>
+        </div>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
+</div>

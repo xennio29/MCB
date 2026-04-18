@@ -1,0 +1,50 @@
+.container-admin {
+  padding: 20px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.tab-content {
+  padding: 20px 0;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.row {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.col {
+  flex: 1;
+}
+
+button {
+  margin-top: 10px;
+}
+
+h3 {
+  margin-top: 0;
+  color: #3f51b5;
+}
+
+.warning-text {
+    color: #f44336;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.player-actions {
+    margin-top: 30px;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.03);
+    border-radius: 8px;
+
+    h4 {
+        margin-top: 0;
+        margin-bottom: 20px;
+    }
+}

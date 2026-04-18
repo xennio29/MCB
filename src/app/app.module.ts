@@ -9,18 +9,14 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './core/material/material.module';
 import { SideBarComponent } from './side-bar/side-bar.component';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
-import { MatCardModule } from '@angular/material/card';
-import { MatListModule } from '@angular/material/list';
 import { TixbankComponent } from './tixbank/tixbank.component';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatTableModule } from '@angular/material/table';
-import { MatInputModule } from '@angular/material/input';
 import { MasterComponent } from './master/master.component';
-import { MatExpansionModule } from '@angular/material/expansion';
 import { ProxiesComponent } from './proxies/proxies.component';
-import { MatGridListModule } from '@angular/material/grid-list';
-import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { FullCalendarModule } from '@fullcalendar/angular';
+import { LoginComponent } from './auth/login/login.component';
+import { RegisterComponent } from './auth/register/register.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AdminDashboardComponent } from './admin/admin-dashboard/admin-dashboard.component';
 
 
 @NgModule({ declarations: [
@@ -30,19 +26,16 @@ import { FullCalendarModule } from '@fullcalendar/angular';
         SideBarComponent,
         TixbankComponent,
         MasterComponent,
-        ProxiesComponent
+        ProxiesComponent,
+        LoginComponent,
+        RegisterComponent,
+        AdminDashboardComponent
     ],
     bootstrap: [AppComponent], imports: [BrowserModule,
         AppRoutingModule,
         BrowserAnimationsModule,
         FullCalendarModule,
         MaterialModule,
-        MatCardModule,
-        MatListModule,
-        MatFormFieldModule,
-        MatTableModule,
-        MatInputModule,
-        MatExpansionModule,
-        MatGridListModule,
-        MatButtonToggleModule], providers: [provideHttpClient(withInterceptorsFromDi())] })
+        FormsModule,
+        ReactiveFormsModule], providers: [provideHttpClient(withInterceptorsFromDi())] })
 export class AppModule { }

@@ -6,6 +6,11 @@ import { SupabaseService } from '../core/supabase.service';
 import { DataService } from '../data-model/data/data.service';
 import { Observable } from 'rxjs';
 import { User } from '@supabase/supabase-js';
+import emailjs from '@emailjs/browser';
+import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { ConfirmDialogComponent } from '../shared/dialogs/confirm-dialog.component';
+import { EventDialogComponent } from '../shared/dialogs/event-dialog.component';
 
 
 @Component({
@@ -45,7 +50,12 @@ export class HomeComponent implements OnInit {
     dateClick: this.handleDateClick.bind(this),
   };
 
-  constructor(private supabase: SupabaseService, private dataService: DataService) {
+  constructor(
+    private supabase: SupabaseService, 
+    private dataService: DataService,
+    private dialog: MatDialog,
+    private snackBar: MatSnackBar
+  ) {
     this.currentUser$ = this.supabase.currentUser$;
     this.supabase.profile$.subscribe(profile => {
       if (profile) {
@@ -99,24 +109,28 @@ loadElfsightScript(): void {
   async handleDateClick(info: any) {
     if (!this.isAdmin) return;
 
-    let eventTitle = prompt("Nom de l'événement :");
-    if (eventTitle) {
-      let eventDescription = prompt("Description :");
-      const imageFile = prompt("URL Image (optionnel) :");
+    const dialogRef = this.dialog.open(EventDialogComponent, {
+      data: { dateStr: info.dateStr },
+      width: '400px'
+    });
 
-      const { error } = await this.dataService.createEvent(
-        eventTitle, 
-        info.dateStr, 
-        eventDescription || '', 
-        imageFile || ''
-      );
+    dialogRef.afterClosed().subscribe(async result => {
+      if (result && result.title) {
+        const { error } = await this.dataService.createEvent(
+          result.title, 
+          info.dateStr, 
+          result.description || '', 
+          result.image || ''
+        );
 
-      if (!error) {
-        this.loadEvents();
-      } else {
-        alert("Erreur lors de la création de l'événement");
+        if (!error) {
+          this.snackBar.open('Événement créé avec succès !', 'OK', { duration: 3000 });
+          this.loadEvents();
+        } else {
+          this.snackBar.open("Erreur lors de la création de l'événement", 'Fermer', { duration: 5000 });
+        }
       }
-    }
+    });
   }
 
   handleEventClick(info: any): void {
@@ -135,21 +149,34 @@ loadElfsightScript(): void {
   async deleteEvent() {
     if (this.eventToEdit && this.isAdmin) {
       const eventTitle = this.eventToEdit.title;
-      const deleteEvent = confirm(`Voulez-vous vraiment supprimer l'événement "${eventTitle}" ?`);
-      if (deleteEvent) {
-        const { error } = await this.dataService.deleteEvent(this.eventToEdit.id);
-        if (!error) {
-          this.loadEvents();
-          this.showPopup = false;
+      
+      const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+        data: {
+          title: 'Suppression Événement',
+          message: `Voulez-vous vraiment supprimer l'événement "${eventTitle}" ?`,
+          confirmText: 'Supprimer'
         }
-      }
+      });
+
+      dialogRef.afterClosed().subscribe(async result => {
+        if (result) {
+          const { error } = await this.dataService.deleteEvent(this.eventToEdit.id);
+          if (!error) {
+            this.snackBar.open('Événement supprimé.', 'OK', { duration: 3000 });
+            this.loadEvents();
+            this.showPopup = false;
+          } else {
+            this.snackBar.open('Erreur lors de la suppression.', 'Fermer', { duration: 5000 });
+          }
+        }
+      });
     }
   }
 
   async onReserve() {
     if (this.eventToEdit) {
       if (!this.resFirstName || !this.resLastName) {
-        alert('Le Nom et le Prénom sont obligatoires pour la réservation.');
+        this.snackBar.open('Le Nom et le Prénom sont obligatoires pour la réservation.', 'Fermer', { duration: 4000 });
         return;
       }
 
@@ -162,12 +189,31 @@ loadElfsightScript(): void {
           this.resEatOnSite
         );
         if (error) throw error;
-        alert('Réservation réussie !');
+        
+        // --- Intégration EmailJS ---
+        try {
+          await emailjs.send(
+            'service_m3jd5oy',
+            'template_dsbwe8f',
+            {
+              event_name: this.eventToEdit.title,
+              to_name: this.resFirstName + ' ' + this.resLastName,
+              message: this.reservationComment || 'Aucun commentaire',
+              eat_on_site: this.resEatOnSite ? 'Oui' : 'Non'
+            },
+            'zhMmNh2sxqyqiig2z'
+          );
+        } catch (emailErr) {
+          console.error('Erreur lors de l\'envoi de l\'email: ', emailErr);
+        }
+        // ---------------------------
+
+        this.snackBar.open('Réservation réussie !', 'OK', { duration: 3000 });
         this.showPopup = false;
         this.reservationComment = '';
         this.resEatOnSite = false;
       } catch (e: any) {
-        alert('Erreur : ' + (e.message || 'Impossible de réserver. Vous avez peut-être déjà une réservation pour cet événement.'));
+        this.snackBar.open('Erreur : Impossible de réserver. Vous avez peut-être déjà une réservation pour cet événement.', 'Fermer', { duration: 5000 });
       }
     }
   }

@@ -3,6 +3,9 @@ import { FormControl } from '@angular/forms';
 import { Observable, combineLatest } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { DataService } from '../../data-model/data/data.service';
+import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { ConfirmDialogComponent } from '../../shared/dialogs/confirm-dialog.component';
 
 interface Player {
   firstName: string;
@@ -29,6 +32,9 @@ export class AdminDashboardComponent implements OnInit {
   filteredPlayersManage: Observable<Player[]>;
 
   selectedPlayerForManage: Player | null = null;
+  
+  // Réservations groupées par événement
+  reservationsByEvent: { eventName: string, date: string, reservations: any[] }[] = [];
 
   tixData = {
     firstName: '',
@@ -52,7 +58,11 @@ export class AdminDashboardComponent implements OnInit {
     image: ''
   };
 
-  constructor(private dataService: DataService) {
+  constructor(
+    private dataService: DataService,
+    private dialog: MatDialog,
+    private snackBar: MatSnackBar
+  ) {
     this.filteredPlayers = this.playerSearchControl.valueChanges.pipe(
       startWith(''),
       map(value => this._filter(value || ''))
@@ -65,6 +75,7 @@ export class AdminDashboardComponent implements OnInit {
   }
 
   async ngOnInit() {
+    this.loadReservations();
     // Load existing players to populate autocomplete
     combineLatest([
       this.dataService.getTixProfils(),
@@ -90,6 +101,28 @@ export class AdminDashboardComponent implements OnInit {
       
       this.allPlayers = Array.from(playerMap.values()).sort((a, b) => a.fullName.localeCompare(b.fullName));
     });
+  }
+
+  private async loadReservations() {
+    const { data } = await this.dataService.getReservations();
+    if (data) {
+      // Grouper par événement
+      const grouped = new Map<string, { eventName: string, date: string, reservations: any[] }>();
+      
+      data.forEach(res => {
+        const eventTitle = res.events?.title || 'Événement Inconnu';
+        const eventDate = res.events?.event_date || '';
+        
+        if (!grouped.has(eventTitle)) {
+          grouped.set(eventTitle, { eventName: eventTitle, date: eventDate, reservations: [] });
+        }
+        grouped.get(eventTitle)!.reservations.push(res);
+      });
+
+      this.reservationsByEvent = Array.from(grouped.values()).sort((a, b) => {
+        return new Date(b.date).getTime() - new Date(a.date).getTime();
+      });
+    }
   }
 
   private normalize(str: string): string {
@@ -118,33 +151,51 @@ export class AdminDashboardComponent implements OnInit {
   async onDeletePlayerTix() {
     if (!this.selectedPlayerForManage) return;
     
-    const confirmDelete = confirm(`Voulez-vous vraiment supprimer TOUT l'historique TIX de ${this.selectedPlayerForManage.fullName} ?`);
-    if (confirmDelete) {
-      this.loading = true;
-      const { error } = await this.dataService.deletePlayerTix(this.selectedPlayerForManage.firstName, this.selectedPlayerForManage.lastName);
-      if (!error) {
-        alert('Historique TIX supprimé.');
-      } else {
-        alert('Erreur lors de la suppression.');
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      data: {
+        title: 'Suppression Historique TIX',
+        message: `Voulez-vous vraiment supprimer TOUT l'historique TIX de ${this.selectedPlayerForManage.fullName} ?`,
+        confirmText: 'Supprimer'
       }
-      this.loading = false;
-    }
+    });
+
+    dialogRef.afterClosed().subscribe(async (result) => {
+      if (result) {
+        this.loading = true;
+        const { error } = await this.dataService.deletePlayerTix(this.selectedPlayerForManage!.firstName, this.selectedPlayerForManage!.lastName);
+        if (!error) {
+          this.snackBar.open('Historique TIX supprimé.', 'OK', { duration: 3000 });
+        } else {
+          this.snackBar.open('Erreur lors de la suppression.', 'Fermer', { duration: 5000 });
+        }
+        this.loading = false;
+      }
+    });
   }
 
   async onDeletePlayerMasters() {
     if (!this.selectedPlayerForManage) return;
     
-    const confirmDelete = confirm(`Voulez-vous vraiment supprimer TOUT l'historique Master de ${this.selectedPlayerForManage.fullName} ?`);
-    if (confirmDelete) {
-      this.loading = true;
-      const { error } = await this.dataService.deletePlayerMasters(this.selectedPlayerForManage.firstName, this.selectedPlayerForManage.lastName);
-      if (!error) {
-        alert('Historique Master supprimé.');
-      } else {
-        alert('Erreur lors de la suppression.');
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      data: {
+        title: 'Suppression Historique Master',
+        message: `Voulez-vous vraiment supprimer TOUT l'historique Master de ${this.selectedPlayerForManage.fullName} ?`,
+        confirmText: 'Supprimer'
       }
-      this.loading = false;
-    }
+    });
+
+    dialogRef.afterClosed().subscribe(async (result) => {
+      if (result) {
+        this.loading = true;
+        const { error } = await this.dataService.deletePlayerMasters(this.selectedPlayerForManage!.firstName, this.selectedPlayerForManage!.lastName);
+        if (!error) {
+          this.snackBar.open('Historique Master supprimé.', 'OK', { duration: 3000 });
+        } else {
+          this.snackBar.open('Erreur lors de la suppression.', 'Fermer', { duration: 5000 });
+        }
+        this.loading = false;
+      }
+    });
   }
 
   async onAddTix() {
@@ -157,10 +208,29 @@ export class AdminDashboardComponent implements OnInit {
         this.tixData.date,
         this.tixData.eventName
       );
-      alert('TIX ajoutés avec succès !');
+      this.snackBar.open('TIX ajoutés avec succès !', 'OK', { duration: 3000 });
       this.resetTixForm();
     } catch (e) {
-      alert('Erreur lors de l\'ajout des TIX');
+      this.snackBar.open('Erreur lors de l\'ajout des TIX', 'Fermer', { duration: 5000 });
+    }
+    this.loading = false;
+  }
+
+  async onRemoveTix() {
+    this.loading = true;
+    try {
+      const amountToRemove = -Math.abs(this.tixData.amount);
+      await this.dataService.addTixEntry(
+        this.tixData.firstName,
+        this.tixData.lastName,
+        amountToRemove,
+        this.tixData.date,
+        this.tixData.eventName || 'Achat / Dépense'
+      );
+      this.snackBar.open('TIX retirés avec succès !', 'OK', { duration: 3000 });
+      this.resetTixForm();
+    } catch (e) {
+      this.snackBar.open('Erreur lors du retrait des TIX', 'Fermer', { duration: 5000 });
     }
     this.loading = false;
   }
@@ -174,10 +244,10 @@ export class AdminDashboardComponent implements OnInit {
         this.masterData.points,
         this.masterData.date
       );
-      alert('Points Master ajoutés avec succès !');
+      this.snackBar.open('Points Master ajoutés avec succès !', 'OK', { duration: 3000 });
       this.resetMasterForm();
     } catch (e) {
-      alert('Erreur lors de l\'ajout des points Master');
+      this.snackBar.open('Erreur lors de l\'ajout des points Master', 'Fermer', { duration: 5000 });
     }
     this.loading = false;
   }
@@ -191,10 +261,10 @@ export class AdminDashboardComponent implements OnInit {
         this.eventData.description,
         this.eventData.image
       );
-      alert('Événement créé avec succès !');
+      this.snackBar.open('Événement créé avec succès !', 'OK', { duration: 3000 });
       this.resetEventForm();
     } catch (e) {
-      alert('Erreur lors de la création de l\'événement');
+      this.snackBar.open('Erreur lors de la création de l\'événement', 'Fermer', { duration: 5000 });
     }
     this.loading = false;
   }

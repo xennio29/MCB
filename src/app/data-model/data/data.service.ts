@@ -208,6 +208,47 @@ export class DataService {
         eat_on_site: eatOnSite
       }]);
   }
+
+  async getReservations() {
+    const { data, error } = await this.supabase.client
+      .from('reservations')
+      .select(`
+        *,
+        events (
+          title,
+          event_date
+        )
+      `)
+      .order('created_at', { ascending: false });
+    return { data, error };
+  }
+
+  // Reports Methods
+  async getReports() {
+    const { data, error } = await this.supabase.client
+      .from('reports')
+      .select('*')
+      .order('created_at', { ascending: false });
+    return { data, error };
+  }
+
+  async createReport(author: string, format: string, players: number, location: string, decklistUrl: string, content: string) {
+    const { data, error } = await this.supabase.client
+      .from('reports')
+      .insert([{ 
+        author_name: author,
+        format: format,
+        players_count: players,
+        location: location,
+        decklist_url: decklistUrl,
+        content: content
+      }]);
+    return { data, error };
+  }
+
+  async deleteReport(id: string) {
+    return await this.supabase.client.from('reports').delete().eq('id', id);
+  }
 }
 
 export enum DataType {

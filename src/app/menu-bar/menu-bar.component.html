@@ -15,6 +15,9 @@
         <div class="menu" routerLink="/proxies" routerLinkActive="is-active" fxHide.xs>
             <span>Proxies</span>
         </div>
+        <div class="menu" routerLink="/reports" routerLinkActive="is-active" fxHide.xs>
+            <span>Reports</span>
+        </div>
     </div>
 
     <!-- Center Section (Logo) -->
@@ -31,7 +34,7 @@
         </div>
 
         <div class="auth-group" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="15px">
-            <div class="menu admin-btn" *ngIf="(profile$ | async)?.role === 'admin'" routerLink="/admin" style="color: #ffd740; font-weight: bold;">
+            <div class="menu admin-btn" *ngIf="(profile$ | async)?.role === 'admin'" routerLink="/admin" style="color: #f90000; font-weight: bold;">
                 ADMIN
             </div>
             

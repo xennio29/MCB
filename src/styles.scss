@@ -2,3 +2,13 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+/* Supprime le orange par défaut du thème Material sur les champs de saisie */
+::ng-deep {
+  .mat-form-field-appearance-outline.mat-focused .mat-form-field-outline-thick {
+    color: #f90000 !important;
+  }
+  .mat-form-field-appearance-outline.mat-focused .mat-form-field-label {
+    color: #f90000 !important;
+  }
+}

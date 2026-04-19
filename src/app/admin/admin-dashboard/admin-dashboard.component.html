@@ -5,8 +5,8 @@
     <!-- TIX Management -->
     <mat-tab label="Gestion TIX">
       <div class="tab-content">
-        <h3>Ajouter des TIX</h3>
-        <form (ngSubmit)="onAddTix()" #tixForm="ngForm">
+        <h3>Ajouter ou Retirer des TIX</h3>
+        <form #tixForm="ngForm">
           <mat-form-field appearance="outline" class="full-width">
             <mat-label>Rechercher un joueur existant</mat-label>
             <input type="text"
@@ -35,11 +35,11 @@
           </div>
           <div class="row">
             <mat-form-field appearance="outline" class="col">
-              <mat-label>Montant (+/-)</mat-label>
+              <mat-label>Montant</mat-label>
               <input matInput type="number" [(ngModel)]="tixData.amount" name="amount" required>
             </mat-form-field>
             <mat-form-field appearance="outline" class="col">
-              <mat-label>Nom de l'événement</mat-label>
+              <mat-label>Nom de l'événement / Achat</mat-label>
               <input matInput [(ngModel)]="tixData.eventName" name="eventName" required>
             </mat-form-field>
           </div>
@@ -49,7 +49,11 @@
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
           </mat-form-field>
-          <button mat-raised-button color="primary" [disabled]="!tixForm.valid || loading">Ajouter</button>
+          
+          <div class="row" fxLayout="row" fxLayoutGap="20px">
+            <button mat-raised-button color="primary" type="button" (click)="onAddTix()" [disabled]="!tixForm.valid || loading">Ajouter des TIX</button>
+            <button mat-raised-button color="warn" type="button" (click)="onRemoveTix()" [disabled]="!tixForm.valid || loading">Dépenser / Retirer des TIX</button>
+          </div>
         </form>
       </div>
     </mat-tab>
@@ -125,6 +129,49 @@
           </mat-form-field>
           <button mat-raised-button color="primary" [disabled]="!eventForm.valid || loading">Créer l'événement</button>
         </form>
+      </div>
+    </mat-tab>
+
+    <!-- Inscriptions Management -->
+    <mat-tab label="Inscriptions">
+      <div class="tab-content">
+        <h3>Inscrits par Événement</h3>
+        
+        <mat-accordion>
+          <mat-expansion-panel *ngFor="let ev of reservationsByEvent">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                <strong>{{ ev.eventName }}</strong>
+              </mat-panel-title>
+              <mat-panel-description>
+                {{ ev.date | date:'dd/MM/yyyy' }} - {{ ev.reservations.length }} inscrit(s)
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+
+            <table class="mat-elevation-z2" style="width: 100%; border-collapse: collapse; margin-top: 10px;">
+              <thead>
+                <tr style="text-align: left; border-bottom: 1px solid #444; background: #333; color: white;">
+                  <th style="padding: 8px;">Joueur</th>
+                  <th style="padding: 8px;">Repas</th>
+                  <th style="padding: 8px;">Commentaire</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let res of ev.reservations" style="border-bottom: 1px solid #eee;">
+                  <td style="padding: 8px;">{{ res.player_first_name }} {{ res.player_last_name }}</td>
+                  <td style="padding: 8px; font-weight: bold;" [ngStyle]="{'color': res.eat_on_site ? '#4caf50' : '#f44336'}">{{ res.eat_on_site ? 'Oui' : 'Non' }}</td>
+                  <td style="padding: 8px; font-style: italic;">{{ res.comment || '-' }}</td>
+                </tr>
+                <tr *ngIf="ev.reservations.length === 0">
+                  <td colspan="3" style="padding: 8px; text-align: center;">Aucun inscrit pour le moment.</td>
+                </tr>
+              </tbody>
+            </table>
+          </mat-expansion-panel>
+        </mat-accordion>
+        <div *ngIf="reservationsByEvent.length === 0" style="margin-top: 20px;">
+          <p>Aucune réservation trouvée dans la base de données.</p>
+        </div>
       </div>
     </mat-tab>
 

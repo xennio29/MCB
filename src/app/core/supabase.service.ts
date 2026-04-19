@@ -57,6 +57,25 @@ export class SupabaseService {
         }
       }
     });
+
+    // Si la création du compte auth a réussi, on crée manuellement le profil
+    // Note: C'est préferable d'utiliser un Trigger SQL dans Supabase pour ça, 
+    // mais cette méthode front-end fonctionne si les règles (RLS) le permettent.
+    if (data.user && !error) {
+      const { error: profileError } = await this.supabase
+        .from('profiles')
+        .insert([{ 
+          id: data.user.id, 
+          first_name: firstName, 
+          last_name: lastName,
+          role: 'user' // Essaye 'user' car 'player' est refusé par la base
+        }]);
+        
+      if (profileError) {
+        console.error('Erreur lors de la création du profil :', profileError);
+      }
+    }
+
     return { data, error };
   }
 

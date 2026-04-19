@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { SupabaseService } from '../../core/supabase.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-register',
@@ -17,7 +18,11 @@ export class RegisterComponent {
   loading = false;
   errorMessage = '';
 
-  constructor(private supabase: SupabaseService, private router: Router) {}
+  constructor(
+    private supabase: SupabaseService, 
+    private router: Router,
+    private snackBar: MatSnackBar
+  ) {}
 
   async onRegister() {
     this.loading = true;
@@ -27,7 +32,7 @@ export class RegisterComponent {
     if (error) {
       this.errorMessage = error.message;
     } else {
-      alert('Inscription réussie ! Vous pouvez maintenant vous connecter.');
+      this.snackBar.open('Inscription réussie ! Vous pouvez maintenant vous connecter.', 'OK', { duration: 3000 });
       this.router.navigate(['/login']);
     }
     this.loading = false;

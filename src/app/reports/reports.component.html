@@ -1,0 +1,131 @@
+<div class="container container-reports">
+  <div class="header-section" fxLayout="row" fxLayoutAlign="space-between center">
+    <h2>Reports & Tournois</h2>
+    <button mat-raised-button color="primary" (click)="openCreateForm()">
+      <mat-icon>add_comment</mat-icon> Partager mon report
+    </button>
+  </div>
+
+  <div *ngIf="loading" class="loading-spinner" fxLayout="row" fxLayoutAlign="center center">
+    <mat-spinner diameter="40"></mat-spinner>
+  </div>
+
+  <div class="reports-grid" *ngIf="!loading && reports.length > 0">
+    <mat-card class="report-card" *ngFor="let report of reports" (click)="openReport(report)">
+      <mat-card-header>
+        <mat-card-title fxLayout="row" fxLayoutAlign="start center">
+          <mat-icon style="margin-right: 5px;">person</mat-icon> {{ report.author_name }}
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="card-info" style="margin-top: 10px; margin-bottom: 15px; color: #ddd; font-size: 0.9em; line-height: 1.6;">
+          <div><strong style="color: rgba(249, 0, 0, 1);">Format :</strong> {{ report.format }}</div>
+          <div><strong style="color: rgba(249, 0, 0, 1);">Lieu :</strong> {{ report.location }}</div>
+          <div><strong style="color: rgba(249, 0, 0, 1);">Joueurs :</strong> {{ report.players_count }} participants</div>
+        </div>
+        <p class="preview-text">"{{ report.content | slice:0:80 }}{{ report.content.length > 80 ? '...' : '' }}"</p>
+        <div class="tags" style="margin-top: 15px;">
+          <span class="tag date">Publié le {{ report.created_at | date:'dd/MM/yyyy' }}</span>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <div *ngIf="!loading && reports.length === 0" class="empty-state">
+    <p>Aucun report n'a été publié pour le moment. Sois le premier !</p>
+  </div>
+
+  <!-- Popup: Create Form -->
+  <div class="popup-overlay" *ngIf="showFormPopup">
+    <div class="popup-content">
+      <div class="popup-header" fxLayout="row" fxLayoutAlign="space-between center">
+        <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
+          <img [src]="logo" alt="MCB" class="popup-logo">
+          <h3>Nouveau Report</h3>
+        </div>
+        <button mat-icon-button (click)="closeForm()"><mat-icon>close</mat-icon></button>
+      </div>
+      
+      <form (ngSubmit)="submitReport()" #reportForm="ngForm" class="report-form">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Prénom/Nom ou Pseudo</mat-label>
+          <input matInput [(ngModel)]="formData.authorName" name="authorName" required>
+          <mat-hint>Comment souhaites-tu apparaître en tant qu'auteur ?</mat-hint>
+        </mat-form-field>
+        
+        <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="15px">
+          <mat-form-field appearance="outline" fxFlex>
+            <mat-label>Format du tournoi</mat-label>
+            <input matInput type="text" [(ngModel)]="formData.format" name="format" placeholder="Ex: Limité, Legacy..." required>
+            <mat-hint>Le format joué (ex: Modern, Draft...)</mat-hint>
+          </mat-form-field>
+          
+          <mat-form-field appearance="outline" fxFlex>
+            <mat-label>Nombre de joueurs</mat-label>
+            <input matInput type="number" [(ngModel)]="formData.playersCount" name="playersCount" required min="1">
+            <mat-hint>Combien de personnes ont participé ?</mat-hint>
+          </mat-form-field>
+        </div>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Lieu du tournoi</mat-label>
+          <input matInput [(ngModel)]="formData.location" name="location" required>
+          <mat-hint>Ville ou nom de la boutique organisatrice.</mat-hint>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Lien Decklist (Optionnel)</mat-label>
+          <input matInput [(ngModel)]="formData.decklistUrl" name="decklistUrl" placeholder="Ex: https://www.moxfield.com/...">
+          <mat-hint>Pour permettre aux autres de voir ta liste (Moxfield, Goldfish...).</mat-hint>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Ton report</mat-label>
+          <textarea matInput [(ngModel)]="formData.content" name="content" required rows="10" placeholder="Raconte-nous tes matchs, tes plays..."></textarea>
+          <mat-hint>Détaille ton parcours au tournoi, tes ressentis, conseils, etc.</mat-hint>
+        </mat-form-field>
+
+        <div class="form-actions" fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="10px">
+          <button mat-button type="button" (click)="closeForm()">Annuler</button>
+          <button mat-raised-button color="primary" type="submit" [disabled]="!reportForm.valid || loading">Publier</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Popup: Read Report -->
+  <div class="popup-overlay" *ngIf="showReportPopup && selectedReport">
+    <div class="popup-content read-popup">
+      <div class="popup-header" fxLayout="row" fxLayoutAlign="space-between center">
+        <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
+          <img [src]="logo" alt="MCB" class="popup-logo">
+          <h3 class="read-title">Report de {{ selectedReport.author_name }}</h3>
+        </div>
+        <button mat-icon-button (click)="closeReport()"><mat-icon>close</mat-icon></button>
+      </div>
+
+      <div class="report-meta" fxLayout="row wrap" fxLayoutGap="15px">
+        <span class="meta-item"><mat-icon>category</mat-icon> <strong>Format :</strong> {{ selectedReport.format }}</span>
+        <span class="meta-item"><mat-icon>place</mat-icon> <strong>Lieu :</strong> {{ selectedReport.location }}</span>
+        <span class="meta-item"><mat-icon>group</mat-icon> <strong>Joueurs :</strong> {{ selectedReport.players_count }}</span>
+      </div>
+
+      <div class="report-link" *ngIf="selectedReport.decklist_url">
+        <a [href]="selectedReport.decklist_url" target="_blank" mat-stroked-button color="primary">
+          <mat-icon>link</mat-icon> Voir la Decklist
+        </a>
+      </div>
+
+      <div class="report-body">
+        <p [ngStyle]="{'white-space': 'pre-wrap'}">{{ selectedReport.content }}</p>
+      </div>
+      
+      <div class="report-footer" fxLayout="row" fxLayoutAlign="space-between center">
+        <button *ngIf="isAdmin" mat-button color="warn" (click)="onDeleteReport(selectedReport)">
+          <mat-icon>delete</mat-icon> Supprimer le report
+        </button>
+        <small style="margin-left: auto;">Publié le {{ selectedReport.created_at | date:'dd/MM/yyyy à HH:mm' }}</small>
+      </div>
+    </div>
+  </div>
+</div>

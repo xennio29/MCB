@@ -8,6 +8,7 @@ import { LoginComponent } from './auth/login/login.component';
 import { RegisterComponent } from './auth/register/register.component';
 import { AdminDashboardComponent } from './admin/admin-dashboard/admin-dashboard.component';
 import { AdminGuard } from './core/auth.guard';
+import { ReportsComponent } from './reports/reports.component';
 
 export const routes: Routes = [
   {path: 'tixbank', component: TixbankComponent },
@@ -18,6 +19,7 @@ export const routes: Routes = [
   {path: 'login', component: LoginComponent },
   {path: 'register', component: RegisterComponent },
   {path: 'admin', component: AdminDashboardComponent, canActivate: [AdminGuard] },
+  {path: 'reports', component: ReportsComponent },
 
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: '**', redirectTo: '/home', pathMatch: 'full' },

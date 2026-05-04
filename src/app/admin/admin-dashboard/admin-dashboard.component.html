@@ -14,7 +14,7 @@
                    matInput
                    [formControl]="playerSearchControl"
                    [matAutocomplete]="autoTix">
-            <mat-autocomplete #autoTix="matAutocomplete" (optionSelected)="onPlayerSelected($event.option.value)">
+            <mat-autocomplete #autoTix="matAutocomplete" (optionSelected)="onTixPlayerSelected($event.option.value)">
               <mat-option *ngFor="let player of filteredPlayers | async" [value]="player">
                 {{player.fullName}}
               </mat-option>
@@ -23,15 +23,26 @@
             <mat-hint>Remplira automatiquement le Prénom et le Nom ci-dessous</mat-hint>
           </mat-form-field>
 
-          <div class="row">
+          <div *ngIf="selectedTixPlayers.length > 0" style="margin-bottom: 20px;">
+            <p><strong>Joueurs sélectionnés :</strong></p>
+            <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+              <span *ngFor="let p of selectedTixPlayers" style="background: #e0e0e0; padding: 5px 10px; border-radius: 15px; display: flex; align-items: center; color: black;">
+                {{ p.fullName }}
+                <mat-icon style="font-size: 16px; width: 16px; height: 16px; margin-left: 5px; cursor: pointer;" (click)="removeTixPlayer(p)">cancel</mat-icon>
+              </span>
+            </div>
+          </div>
+
+          <div class="row" style="align-items: center;">
             <mat-form-field appearance="outline" class="col">
               <mat-label>Prénom</mat-label>
-              <input matInput [(ngModel)]="tixData.firstName" name="firstName" required>
+              <input matInput [(ngModel)]="tixData.firstName" name="firstName">
             </mat-form-field>
             <mat-form-field appearance="outline" class="col">
               <mat-label>Nom</mat-label>
-              <input matInput [(ngModel)]="tixData.lastName" name="lastName" required>
+              <input matInput [(ngModel)]="tixData.lastName" name="lastName">
             </mat-form-field>
+            <button mat-stroked-button type="button" (click)="addManualTixPlayer()" style="margin-bottom: 20px;">Ajouter à la liste</button>
           </div>
           <div class="row">
             <mat-form-field appearance="outline" class="col">
@@ -70,7 +81,7 @@
                    matInput
                    [formControl]="playerSearchControl"
                    [matAutocomplete]="autoMaster">
-            <mat-autocomplete #autoMaster="matAutocomplete" (optionSelected)="onPlayerSelected($event.option.value)">
+            <mat-autocomplete #autoMaster="matAutocomplete" (optionSelected)="onMasterPlayerSelected($event.option.value)">
               <mat-option *ngFor="let player of filteredPlayers | async" [value]="player">
                 {{player.fullName}}
               </mat-option>
@@ -79,19 +90,34 @@
             <mat-hint>Remplira automatiquement le Prénom et le Nom ci-dessous</mat-hint>
           </mat-form-field>
 
-          <div class="row">
+          <div *ngIf="selectedMasterPlayers.length > 0" style="margin-bottom: 20px;">
+            <p><strong>Joueurs sélectionnés :</strong></p>
+            <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+              <span *ngFor="let p of selectedMasterPlayers" style="background: #e0e0e0; padding: 5px 10px; border-radius: 15px; display: flex; align-items: center; color: black;">
+                {{ p.fullName }}
+                <mat-icon style="font-size: 16px; width: 16px; height: 16px; margin-left: 5px; cursor: pointer;" (click)="removeMasterPlayer(p)">cancel</mat-icon>
+              </span>
+            </div>
+          </div>
+
+          <div class="row" style="align-items: center;">
             <mat-form-field appearance="outline" class="col">
               <mat-label>Prénom</mat-label>
-              <input matInput [(ngModel)]="masterData.firstName" name="firstName" required>
+              <input matInput [(ngModel)]="masterData.firstName" name="firstName">
             </mat-form-field>
             <mat-form-field appearance="outline" class="col">
               <mat-label>Nom</mat-label>
-              <input matInput [(ngModel)]="masterData.lastName" name="lastName" required>
+              <input matInput [(ngModel)]="masterData.lastName" name="lastName">
             </mat-form-field>
+            <button mat-stroked-button type="button" (click)="addManualMasterPlayer()" style="margin-bottom: 20px;">Ajouter à la liste</button>
           </div>
           <mat-form-field appearance="outline" class="full-width">
             <mat-label>Points</mat-label>
             <input matInput type="number" [(ngModel)]="masterData.points" name="points" required>
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Nom de l'événement (ex: FNM, OPEN)</mat-label>
+            <input matInput [(ngModel)]="masterData.eventName" name="eventName">
           </mat-form-field>
           <mat-form-field appearance="outline" class="full-width">
             <mat-label>Date de l'event</mat-label>
@@ -207,6 +233,32 @@
             <button mat-raised-button color="warn" (click)="onDeletePlayerMasters()" [disabled]="loading">
                 Supprimer tout l'historique Master
             </button>
+          </div>
+
+          <div style="margin-top: 20px;">
+            <h4>Historique TIX ({{ selectedPlayerTixHistory.length }})</h4>
+            <table class="mat-elevation-z2" style="width: 100%; margin-bottom: 20px;">
+              <tr *ngFor="let t of selectedPlayerTixHistory" style="border-bottom: 1px solid #ccc;">
+                <td style="padding: 8px;">{{ t.date | date:'dd/MM/yyyy' }}</td>
+                <td style="padding: 8px;">{{ t.eventName }}</td>
+                <td style="padding: 8px; font-weight: bold;">{{ t.tixDiff }}</td>
+                <td style="padding: 8px; text-align: right;">
+                  <button mat-icon-button color="warn" (click)="onDeleteTixEntry(t.id)"><mat-icon>delete</mat-icon></button>
+                </td>
+              </tr>
+            </table>
+
+            <h4>Historique Master ({{ selectedPlayerMasterHistory.length }})</h4>
+            <table class="mat-elevation-z2" style="width: 100%;">
+              <tr *ngFor="let m of selectedPlayerMasterHistory" style="border-bottom: 1px solid #ccc;">
+                <td style="padding: 8px;">{{ m.date | date:'dd/MM/yyyy' }}</td>
+                <td style="padding: 8px;">{{ m.eventType }}</td>
+                <td style="padding: 8px; font-weight: bold;">{{ m.masterPoints }}</td>
+                <td style="padding: 8px; text-align: right;">
+                  <button mat-icon-button color="warn" (click)="onDeleteMasterEntry(m.id)"><mat-icon>delete</mat-icon></button>
+                </td>
+              </tr>
+            </table>
           </div>
         </div>
       </div>

@@ -208,10 +208,11 @@ loadElfsightScript(): void {
         }
         // ---------------------------
 
-        this.snackBar.open('Réservation réussie !', 'OK', { duration: 3000 });
-        this.showPopup = false;
+        this.snackBar.open('Réservation réussie ! Vous pouvez inscrire une autre personne si besoin.', 'OK', { duration: 5000 });
         this.reservationComment = '';
         this.resEatOnSite = false;
+        this.resFirstName = '';
+        this.resLastName = '';
       } catch (e: any) {
         this.snackBar.open('Erreur : Impossible de réserver. Vous avez peut-être déjà une réservation pour cet événement.', 'Fermer', { duration: 5000 });
       }

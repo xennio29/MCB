@@ -23,13 +23,15 @@ export class MasterProfil {
 }
 
 export class MasterChangeByEvent {
+    public id?: string;
     public date: Date;
     public eventType: string;
     public masterPoints: number;
 
-    constructor(date: Date, eventType: string, masterPoints: number) {
+    constructor(date: Date, eventType: string, masterPoints: number, id?: string) {
         this.date = date;
         this.eventType = eventType;
         this.masterPoints = masterPoints;
+        this.id = id;
     }
 }

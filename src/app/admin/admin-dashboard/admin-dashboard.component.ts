@@ -48,8 +48,12 @@ export class AdminDashboardComponent implements OnInit {
     firstName: '',
     lastName: '',
     points: 0,
-    date: new Date()
+    date: new Date(),
+    eventName: ''
   };
+
+  selectedTixPlayers: Player[] = [];
+  selectedMasterPlayers: Player[] = [];
 
   eventData = {
     title: '',
@@ -136,16 +140,123 @@ export class AdminDashboardComponent implements OnInit {
     );
   }
 
-  onPlayerSelected(player: Player) {
-    this.tixData.firstName = player.firstName;
-    this.tixData.lastName = player.lastName;
-    this.masterData.firstName = player.firstName;
-    this.masterData.lastName = player.lastName;
+  onTixPlayerSelected(player: Player) {
+    if (!this.selectedTixPlayers.find(p => p.fullName === player.fullName)) {
+      this.selectedTixPlayers.push({
+        firstName: player.lastName, // Inverted as requested
+        lastName: player.firstName, // Inverted as requested
+        fullName: player.fullName
+      });
+    }
     this.playerSearchControl.setValue('');
   }
 
+  addManualTixPlayer() {
+    if (this.tixData.firstName && this.tixData.lastName) {
+      this.selectedTixPlayers.push({
+        firstName: this.tixData.firstName,
+        lastName: this.tixData.lastName,
+        fullName: `${this.tixData.firstName} ${this.tixData.lastName}`
+      });
+      this.tixData.firstName = '';
+      this.tixData.lastName = '';
+    }
+  }
+
+  removeTixPlayer(player: Player) {
+    this.selectedTixPlayers = this.selectedTixPlayers.filter(p => p !== player);
+  }
+
+  onMasterPlayerSelected(player: Player) {
+    if (!this.selectedMasterPlayers.find(p => p.fullName === player.fullName)) {
+      this.selectedMasterPlayers.push({
+        firstName: player.lastName, // Inverted as requested
+        lastName: player.firstName, // Inverted as requested
+        fullName: player.fullName
+      });
+    }
+    this.playerSearchControl.setValue('');
+  }
+
+  addManualMasterPlayer() {
+    if (this.masterData.firstName && this.masterData.lastName) {
+      this.selectedMasterPlayers.push({
+        firstName: this.masterData.firstName,
+        lastName: this.masterData.lastName,
+        fullName: `${this.masterData.firstName} ${this.masterData.lastName}`
+      });
+      this.masterData.firstName = '';
+      this.masterData.lastName = '';
+    }
+  }
+
+  removeMasterPlayer(player: Player) {
+    this.selectedMasterPlayers = this.selectedMasterPlayers.filter(p => p !== player);
+  }
+
+  selectedPlayerTixHistory: any[] = [];
+  selectedPlayerMasterHistory: any[] = [];
+
   onPlayerSelectedForManage(player: Player) {
     this.selectedPlayerForManage = player;
+    this.loadPlayerHistory();
+    this.playerManageControl.setValue('');
+  }
+
+  loadPlayerHistory() {
+    if (!this.selectedPlayerForManage) return;
+    const tixSub = this.dataService.tixProfilEmitter.subscribe(profils => {
+      const profil = profils.find(p => p.fullName.toLowerCase() === this.selectedPlayerForManage!.fullName.toLowerCase());
+      this.selectedPlayerTixHistory = profil ? profil.tixChanges : [];
+    });
+    const masterSub = this.dataService.masterProfilEmitter.subscribe(profils => {
+      const profil = profils.find(p => p.fullName.toLowerCase() === this.selectedPlayerForManage!.fullName.toLowerCase());
+      this.selectedPlayerMasterHistory = profil ? profil.masterChanges : [];
+    });
+    tixSub.unsubscribe();
+    masterSub.unsubscribe();
+  }
+
+  async onDeleteTixEntry(id: string) {
+    if (!id) {
+       this.snackBar.open('Impossible de supprimer cette ligne (ID manquant)', 'Fermer', { duration: 3000 });
+       return;
+    }
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      data: { title: 'Suppression', message: 'Supprimer cette ligne TIX ?', confirmText: 'Supprimer' }
+    });
+    dialogRef.afterClosed().subscribe(async (result) => {
+      if (result) {
+        this.loading = true;
+        const { error } = await this.dataService.deleteTixEntryById(id);
+        if (!error) {
+          this.snackBar.open('Ligne supprimée', 'OK', { duration: 3000 });
+          this.loadPlayerHistory();
+        }
+        this.loading = false;
+      }
+    });
+  }
+
+  async onDeleteMasterEntry(id: string) {
+    if (!id) {
+       this.snackBar.open('Impossible de supprimer cette ligne (ID manquant)', 'Fermer', { duration: 3000 });
+       return;
+    }
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      data: { title: 'Suppression', message: 'Supprimer cette ligne Master ?', confirmText: 'Supprimer' }
+    });
+    dialogRef.afterClosed().subscribe(async (result) => {
+      if (result) {
+        this.loading = true;
+        const { error } = await this.dataService.deleteMasterEntryById(id);
+        if (!error) {
+          this.snackBar.open('Ligne supprimée', 'OK', { duration: 3000 });
+          this.loadPlayerHistory();
+        }
+        this.loading = false;
+      }
+    });
   }
 
   async onDeletePlayerTix() {
@@ -199,15 +310,21 @@ export class AdminDashboardComponent implements OnInit {
   }
 
   async onAddTix() {
+    if (this.selectedTixPlayers.length === 0) {
+      this.snackBar.open('Veuillez ajouter au moins un joueur', 'Fermer', { duration: 3000 });
+      return;
+    }
     this.loading = true;
     try {
-      await this.dataService.addTixEntry(
-        this.tixData.firstName,
-        this.tixData.lastName,
-        this.tixData.amount,
-        this.tixData.date,
-        this.tixData.eventName
-      );
+      for (const player of this.selectedTixPlayers) {
+        await this.dataService.addTixEntry(
+          player.firstName,
+          player.lastName,
+          this.tixData.amount,
+          this.tixData.date,
+          this.tixData.eventName
+        );
+      }
       this.snackBar.open('TIX ajoutés avec succès !', 'OK', { duration: 3000 });
       this.resetTixForm();
     } catch (e) {
@@ -217,16 +334,22 @@ export class AdminDashboardComponent implements OnInit {
   }
 
   async onRemoveTix() {
+    if (this.selectedTixPlayers.length === 0) {
+      this.snackBar.open('Veuillez ajouter au moins un joueur', 'Fermer', { duration: 3000 });
+      return;
+    }
     this.loading = true;
     try {
       const amountToRemove = -Math.abs(this.tixData.amount);
-      await this.dataService.addTixEntry(
-        this.tixData.firstName,
-        this.tixData.lastName,
-        amountToRemove,
-        this.tixData.date,
-        this.tixData.eventName || 'Achat / Dépense'
-      );
+      for (const player of this.selectedTixPlayers) {
+        await this.dataService.addTixEntry(
+          player.firstName,
+          player.lastName,
+          amountToRemove,
+          this.tixData.date,
+          this.tixData.eventName || 'Achat / Dépense'
+        );
+      }
       this.snackBar.open('TIX retirés avec succès !', 'OK', { duration: 3000 });
       this.resetTixForm();
     } catch (e) {
@@ -236,14 +359,21 @@ export class AdminDashboardComponent implements OnInit {
   }
 
   async onAddMaster() {
+    if (this.selectedMasterPlayers.length === 0) {
+      this.snackBar.open('Veuillez ajouter au moins un joueur', 'Fermer', { duration: 3000 });
+      return;
+    }
     this.loading = true;
     try {
-      await this.dataService.addMasterEntry(
-        this.masterData.firstName,
-        this.masterData.lastName,
-        this.masterData.points,
-        this.masterData.date
-      );
+      for (const player of this.selectedMasterPlayers) {
+        await this.dataService.addMasterEntry(
+          player.firstName,
+          player.lastName,
+          this.masterData.points,
+          this.masterData.date,
+          this.masterData.eventName || 'Event'
+        );
+      }
       this.snackBar.open('Points Master ajoutés avec succès !', 'OK', { duration: 3000 });
       this.resetMasterForm();
     } catch (e) {
@@ -271,10 +401,12 @@ export class AdminDashboardComponent implements OnInit {
 
   private resetTixForm() {
     this.tixData = { firstName: '', lastName: '', amount: 0, date: new Date(), eventName: '' };
+    this.selectedTixPlayers = [];
   }
 
   private resetMasterForm() {
-    this.masterData = { firstName: '', lastName: '', points: 0, date: new Date() };
+    this.masterData = { firstName: '', lastName: '', points: 0, date: new Date(), eventName: '' };
+    this.selectedMasterPlayers = [];
   }
 
   private resetEventForm() {

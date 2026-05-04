@@ -21,13 +21,15 @@ export class TixProfil {
 }
 
 export class TixChangeByEvent {
+    public id?: string;
     public date: Date;
     public eventName: string;
     public tixDiff: number;
 
-    constructor(date: Date, eventName: string, tixDiff: number) {
+    constructor(date: Date, eventName: string, tixDiff: number, id?: string) {
         this.date = date;
         this.eventName = eventName;
         this.tixDiff = tixDiff;
+        this.id = id;
     }
 }

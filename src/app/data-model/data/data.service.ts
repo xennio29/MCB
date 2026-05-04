@@ -59,7 +59,7 @@ export class DataService {
     const profilsMap = new Map<string, TixProfil>();
     data.forEach(entry => {
       const key = `${entry.first_name}|${entry.last_name}`;
-      const change = new TixChangeByEvent(new Date(entry.event_date), entry.event_name, entry.amount);
+      const change = new TixChangeByEvent(new Date(entry.event_date), entry.event_name, entry.amount, entry.id);
       
       if (profilsMap.has(key)) {
         profilsMap.get(key)!.tixChanges.push(change);
@@ -84,7 +84,7 @@ export class DataService {
     const profilsMap = new Map<string, MasterProfil>();
     data.forEach(entry => {
       const key = `${entry.first_name}|${entry.last_name}`;
-      const change = new MasterChangeByEvent(new Date(entry.event_date), 'Event', entry.points);
+      const change = new MasterChangeByEvent(new Date(entry.event_date), entry.event_name || 'Event', entry.points, entry.id);
       
       if (profilsMap.has(key)) {
         profilsMap.get(key)!.masterChanges.push(change);
@@ -128,14 +128,15 @@ export class DataService {
     return { data, error };
   }
 
-  async addMasterEntry(firstName: string, lastName: string, points: number, date: Date) {
+  async addMasterEntry(firstName: string, lastName: string, points: number, date: Date, eventName: string) {
     const { data, error } = await this.supabase.client
       .from('master_entries')
       .insert([{ 
         first_name: firstName, 
         last_name: lastName, 
         points: points, 
-        event_date: date.toISOString().split('T')[0]
+        event_date: date.toISOString().split('T')[0],
+        event_name: eventName
       }]);
     
     if (!error) {
@@ -166,6 +167,30 @@ export class DataService {
       .eq('first_name', firstName)
       .eq('last_name', lastName);
     
+    if (!error) {
+      await this.fetchMasterProfils();
+      this.emitData(DataType.MASTER_PROFIL);
+    }
+    return { error };
+  }
+
+  async deleteTixEntryById(id: string) {
+    const { error } = await this.supabase.client
+      .from('tix_entries')
+      .delete()
+      .eq('id', id);
+    if (!error) {
+      await this.fetchTixProfils();
+      this.emitData(DataType.TIX_PROFIL);
+    }
+    return { error };
+  }
+
+  async deleteMasterEntryById(id: string) {
+    const { error } = await this.supabase.client
+      .from('master_entries')
+      .delete()
+      .eq('id', id);
     if (!error) {
       await this.fetchMasterProfils();
       this.emitData(DataType.MASTER_PROFIL);

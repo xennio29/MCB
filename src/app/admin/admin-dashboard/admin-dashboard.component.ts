@@ -143,8 +143,8 @@ export class AdminDashboardComponent implements OnInit {
   onTixPlayerSelected(player: Player) {
     if (!this.selectedTixPlayers.find(p => p.fullName === player.fullName)) {
       this.selectedTixPlayers.push({
-        firstName: player.lastName, // Inverted as requested
-        lastName: player.firstName, // Inverted as requested
+        firstName: player.firstName,
+        lastName: player.lastName,
         fullName: player.fullName
       });
     }
@@ -170,8 +170,8 @@ export class AdminDashboardComponent implements OnInit {
   onMasterPlayerSelected(player: Player) {
     if (!this.selectedMasterPlayers.find(p => p.fullName === player.fullName)) {
       this.selectedMasterPlayers.push({
-        firstName: player.lastName, // Inverted as requested
-        lastName: player.firstName, // Inverted as requested
+        firstName: player.firstName,
+        lastName: player.lastName,
         fullName: player.fullName
       });
     }

@@ -38,11 +38,11 @@
           <div *ngIf="currentUser$ | async; else loginToReserve" class="reservation-section">
             <div style="display: flex; gap: 10px; margin-top: 15px;">
               <mat-form-field appearance="outline" style="flex: 1;">
-                <mat-label>Prénom</mat-label>
+                <mat-label>Nom</mat-label>
                 <input matInput [(ngModel)]="resFirstName" name="resFirstName" required>
               </mat-form-field>
               <mat-form-field appearance="outline" style="flex: 1;">
-                <mat-label>Nom</mat-label>
+                <mat-label>Prénom</mat-label>
                 <input matInput [(ngModel)]="resLastName" name="resLastName" required>
               </mat-form-field>
             </div>

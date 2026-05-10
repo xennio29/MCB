@@ -20,7 +20,7 @@
               </mat-option>
             </mat-autocomplete>
             <mat-icon matSuffix>search</mat-icon>
-            <mat-hint>Remplira automatiquement le Prénom et le Nom ci-dessous</mat-hint>
+            <mat-hint>Le joueur sera ajouté à la liste de sélection ci-dessous</mat-hint>
           </mat-form-field>
 
           <div *ngIf="selectedTixPlayers.length > 0" style="margin-bottom: 20px;">
@@ -35,11 +35,11 @@
 
           <div class="row" style="align-items: center;">
             <mat-form-field appearance="outline" class="col">
-              <mat-label>Prénom</mat-label>
+              <mat-label>Nom</mat-label>
               <input matInput [(ngModel)]="tixData.firstName" name="firstName">
             </mat-form-field>
             <mat-form-field appearance="outline" class="col">
-              <mat-label>Nom</mat-label>
+              <mat-label>Prénom</mat-label>
               <input matInput [(ngModel)]="tixData.lastName" name="lastName">
             </mat-form-field>
             <button mat-stroked-button type="button" (click)="addManualTixPlayer()" style="margin-bottom: 20px;">Ajouter à la liste</button>
@@ -87,7 +87,7 @@
               </mat-option>
             </mat-autocomplete>
             <mat-icon matSuffix>search</mat-icon>
-            <mat-hint>Remplira automatiquement le Prénom et le Nom ci-dessous</mat-hint>
+            <mat-hint>Le joueur sera ajouté à la liste de sélection ci-dessous</mat-hint>
           </mat-form-field>
 
           <div *ngIf="selectedMasterPlayers.length > 0" style="margin-bottom: 20px;">
@@ -102,11 +102,11 @@
 
           <div class="row" style="align-items: center;">
             <mat-form-field appearance="outline" class="col">
-              <mat-label>Prénom</mat-label>
+              <mat-label>Nom</mat-label>
               <input matInput [(ngModel)]="masterData.firstName" name="firstName">
             </mat-form-field>
             <mat-form-field appearance="outline" class="col">
-              <mat-label>Nom</mat-label>
+              <mat-label>Prénom</mat-label>
               <input matInput [(ngModel)]="masterData.lastName" name="lastName">
             </mat-form-field>
             <button mat-stroked-button type="button" (click)="addManualMasterPlayer()" style="margin-bottom: 20px;">Ajouter à la liste</button>

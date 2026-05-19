@@ -17,6 +17,7 @@ export class MasterComponent implements OnInit {
 
   masterProfils: MasterProfil[] = [];
   filteredMasterProfils: MasterProfil[] = this.masterProfils;
+  lastUpdateDate: Date | null = null;
 
   constructor(private dataService: DataService) {
 
@@ -24,6 +25,16 @@ export class MasterComponent implements OnInit {
       this.masterProfils = result;
       this.masterProfils.sort((profilA, profilB) => profilB.getTotalMasterPoints() - profilA.getTotalMasterPoints())
       this.filteredMasterProfils = this.masterProfils
+
+      let maxDate = new Date(0);
+      this.masterProfils.forEach(profil => {
+        profil.masterChanges.forEach(change => {
+          if (change.date > maxDate) {
+            maxDate = change.date;
+          }
+        });
+      });
+      this.lastUpdateDate = maxDate.getTime() > 0 ? maxDate : null;
     });
 
     this.dataService.askData(DataType.MASTER_PROFIL);

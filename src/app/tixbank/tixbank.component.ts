@@ -33,6 +33,7 @@ export class TixbankComponent implements OnInit {
 
   tixProfils: TixProfil[] = [];
   filteredTixProfils: TixProfil[] = this.tixProfils;
+  lastUpdateDate: Date | null = null;
 
   constructor(private dataService: DataService) {
 
@@ -40,6 +41,16 @@ export class TixbankComponent implements OnInit {
       this.tixProfils = result;
       this.tixProfils.sort((profilA, profilB) => profilA.lastName.toLowerCase().localeCompare(profilB.lastName.toLowerCase()));
       this.filteredTixProfils = this.tixProfils;
+
+      let maxDate = new Date(0);
+      this.tixProfils.forEach(profil => {
+        profil.tixChanges.forEach(change => {
+          if (change.date > maxDate) {
+            maxDate = change.date;
+          }
+        });
+      });
+      this.lastUpdateDate = maxDate.getTime() > 0 ? maxDate : null;
     });
 
     this.dataService.askData(DataType.TIX_PROFIL);

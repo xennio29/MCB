@@ -317,13 +317,17 @@ export class AdminDashboardComponent implements OnInit {
     this.loading = true;
     try {
       for (const player of this.selectedTixPlayers) {
-        await this.dataService.addTixEntry(
+        const { error } = await this.dataService.addTixEntry(
           player.firstName,
           player.lastName,
           this.tixData.amount,
           this.tixData.date,
           this.tixData.eventName
         );
+        if (error) {
+          console.error("Error adding TIX:", error);
+          throw error;
+        }
       }
       this.snackBar.open('TIX ajoutés avec succès !', 'OK', { duration: 3000 });
       this.resetTixForm();
@@ -342,13 +346,17 @@ export class AdminDashboardComponent implements OnInit {
     try {
       const amountToRemove = -Math.abs(this.tixData.amount);
       for (const player of this.selectedTixPlayers) {
-        await this.dataService.addTixEntry(
+        const { error } = await this.dataService.addTixEntry(
           player.firstName,
           player.lastName,
           amountToRemove,
           this.tixData.date,
           this.tixData.eventName || 'Achat / Dépense'
         );
+        if (error) {
+          console.error("Error removing TIX:", error);
+          throw error;
+        }
       }
       this.snackBar.open('TIX retirés avec succès !', 'OK', { duration: 3000 });
       this.resetTixForm();
@@ -366,13 +374,17 @@ export class AdminDashboardComponent implements OnInit {
     this.loading = true;
     try {
       for (const player of this.selectedMasterPlayers) {
-        await this.dataService.addMasterEntry(
+        const { error } = await this.dataService.addMasterEntry(
           player.firstName,
           player.lastName,
           this.masterData.points,
           this.masterData.date,
           this.masterData.eventName || 'Event'
         );
+        if (error) {
+          console.error("Error adding Master points:", error);
+          throw error;
+        }
       }
       this.snackBar.open('Points Master ajoutés avec succès !', 'OK', { duration: 3000 });
       this.resetMasterForm();
